@@ -3,4 +3,4 @@ import ReactDom from 'react-dom';
 import AppEvaluacionCodigo from './AppEvaluacionCodigo';
 import CmpLogin from './CmpLogin';
 const root = document.querySelector( '#root' );
-ReactDom.render( <CmpLogin />, root );
+ReactDom.render( <AppEvaluacionCodigo />, root );

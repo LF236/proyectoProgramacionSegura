@@ -3,6 +3,7 @@ import { CssBaseline, Grid, Paper, Box, Avatar, Typography, TextField, Button, L
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import imgLogo from './assets/img/loginP.jpg'
 import { validarFormularioLogin } from './helpers/validarEntradasFormularios';
+import { sendLoginData } from './helpers/UsersPetitions';
 const LoginComponent = () => {
     const [ inputForm, setInputForm ] = useState( '' );
     const [ alertError, setAlertError ] = useState( false );
@@ -15,16 +16,28 @@ const LoginComponent = () => {
 
     const handleSubmit = ( event ) => {
         event.preventDefault();
-        setAlertError( false );
         // Si hay un error al procesar el formulario se activa la alerta
         if( !validarFormularioLogin( inputForm ) ) {
             setAlertError( true );
-
+            return;
         }
         else {
+            // Autenticacion SI O NO, con los tokens 
+            // Si el formulario pasa las validaciones se envia la data al backend
             setAlertError( false );
+            sendLoginData( inputForm )
+                .then( res => {
+                    const { data, status } = res;
+                    if( data == 'Not found' ) {
+                        setAlertError( true );
+                        return;
+                    }
+                    else if (data == 'YES' ) {
+                        alert( 'Inicio de sesión exitoso' );
+                    }
+                    
+                } )
         }
-        // console.log( errores );
     }
     // Info about Copyring of the system
     const infoCopyright = () => {

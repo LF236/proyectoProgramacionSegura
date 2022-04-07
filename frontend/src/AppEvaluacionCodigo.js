@@ -1,11 +1,20 @@
 import React from 'react';
-import { Button } from '@mui/material';
+import { Routes, Route, BrowserRouter as Router, useRoutes } from 'react-router-dom';
+import CmpLogin from './CmpLogin';
+
+
 const AppEvaluacionCodigo = () => {
+    const RouterList = () => {
+        const routesArr = useRoutes([
+            { path: '/login',element: <CmpLogin /> }
+        ]);
+        return routesArr;
+    } 
     return (
         <>
-            <Button variant="text">Text</Button>
-            <Button variant="contained">Contained</Button>
-            <Button variant="outlined">Outlined</Button>
+            <Router>
+                <RouterList />
+            </Router>
         </>
     );
 }

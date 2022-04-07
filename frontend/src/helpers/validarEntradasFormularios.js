@@ -34,4 +34,5 @@ export const validarFormularioLogin = ( data = {} ) => {
         bandForm = false;
         return bandForm;
     }
+    return bandForm;
 }
