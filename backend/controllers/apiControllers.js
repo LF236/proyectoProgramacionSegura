@@ -20,12 +20,8 @@ const apiControllers = {
                 }
                 else {
                     return res.send( 'Not found' );
-                }
-                
+                }                
             })
-        // console.log( emailInDb );
-        // console.log( password );
-        // res.send('HOLI WAWPO');
     }
 };
 

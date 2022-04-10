@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { CssBaseline, Grid, Paper, Box, Avatar, Typography, TextField, Button, Link, Alert, Fade } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import imgLogo from './assets/img/loginP.jpg'
-import { validarFormularioLogin } from './helpers/validarEntradasFormularios';
-import { sendLoginData } from './helpers/UsersPetitions';
+import imgLogo from '../assets/img/loginP.jpg'
+import { validarFormularioLogin } from '../helpers/validarEntradasFormularios';
+import { sendLoginData } from '../helpers/UsersPetitions';
 const LoginComponent = () => {
     const [ inputForm, setInputForm ] = useState( '' );
     const [ alertError, setAlertError ] = useState( false );
@@ -40,20 +40,19 @@ const LoginComponent = () => {
         }
     }
     // Info about Copyring of the system
-    const infoCopyright = () => {
-        return(
-            <>
-                <Typography variant='body2' color='text.secondary' alignContent='center' sx={ { mt: 5 } }>
-                    { 'Copyright © ' }
-                    <Link color='inherit' href='https://uv.mx/fei' target='_blank'>
-                        Facultad de Estadistica e Informática
-                    </Link>{ ' ' }
-                    { new Date().getFullYear() }
-                    { ' ' }
-                </Typography>
-            </>
+    const Copyright = (props) => {
+        return(           
+            <Typography variant='body2' color='text.secondary' align='center' >
+                { 'Copyright © ' }
+                <Link color='inherit' href='https://uv.mx/fei' target='_blank'>
+                    Facultad de Estadistica e Informática
+                </Link>{ ' ' }
+                { new Date().getFullYear() }
+                { ' ' }
+            </Typography>           
         );
     }
+
 
     return (
         <>
@@ -129,10 +128,10 @@ const LoginComponent = () => {
                                         { '¿No tienes una cuenta? Registrate' }
                                     </Link>
                                 </Grid>
-                            </Grid>
-                            { infoCopyright() }
-                        </Box>
+                            </Grid>                            
+                        </Box>    
                     </Box>
+                    <Copyright sx={ { mt: 5 } }/>
                 </Grid>
 
                 <Grid item xs={ false } sm={ 4 } md={ 7 }
