@@ -1,0 +1,11 @@
+.subtituloFooter {
+  color: red;
+}
+
+@media (max-width: 410px) {
+  .subtituloFooter {
+    color: black;
+    font-size: 10px;
+  }
+}
+/*# sourceMappingURL=styles.css.map */

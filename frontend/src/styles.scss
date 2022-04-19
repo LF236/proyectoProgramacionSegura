@@ -1,0 +1,11 @@
+main {
+    // margin-bottom: 50px;
+}
+
+.subtituloFooter {
+    color: red;
+    @media (max-width: 410px) {
+        color: black;
+        font-size: 10px;
+    }
+}

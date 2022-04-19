@@ -1,4 +1,5 @@
 const db = require( '../database/models' );
+const bcryptjs = require( 'bcryptjs' );
 const { buscarEmail } = require('../helpers/consultasUsuarios');
 const apiControllers = {
     home: ( req, res ) => {
@@ -13,9 +14,10 @@ const apiControllers = {
                 if( emailInDb.length == 0 ) {
                     return res.send( 'Not found' );
                 }
-                // Verificamos si el password recibido es igual al registrado en la DB
+                // Verificamos si el password recibido es igual al registrado en la DB                
                 emailInDb = emailInDb[ 0 ];
-                if( emailInDb.password == password ) {
+                // Se compara el password recibido con el password hasheado en la DB
+                if( bcryptjs.compareSync(  password ,emailInDb.password ) ) {
                     return res.send( 'YES' );
                 }
                 else {

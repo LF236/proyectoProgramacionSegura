@@ -6,19 +6,7 @@ import { validarFormularioRegistro } from '../helpers/validarEntradasFormularios
 const CmpRegistro = () => {
     const [ form, setForm ] = useState( '' );
     const [ alertError, setAlertError ] = useState( false );
-    // Info about Copyring of the system    
-    const Copyright = (props) => {
-        return(           
-            <Typography variant='body2' color='text.secondary' align='center' >
-                { 'Copyright © ' }
-                <Link color='inherit' href='https://uv.mx/fei' target='_blank'>
-                    Facultad de Estadistica e Informática
-                </Link>{ ' ' }
-                { new Date().getFullYear() }
-                { ' ' }
-            </Typography>           
-        );
-    }
+    const [ mensajeError, setMensajeError ] = useState( '' );
 
     const handleInputFormChange = ( e ) => {
         setForm({
@@ -31,11 +19,13 @@ const CmpRegistro = () => {
         e.preventDefault();
         setAlertError( false );
         // Verificamos si no hay errores
-        if( validarFormularioRegistro( form ) ) {
+        const listaErrores = validarFormularioRegistro( form );
+        if( listaErrores.length == 0 ) {
             // Hacemos la peticion
             alert( 'Todo bien' );
         }
         else {
+            setMensajeError( listaErrores[ 0 ] );
             setAlertError( true );
         }
     }
@@ -46,13 +36,12 @@ const CmpRegistro = () => {
                 <Alert severity='error' 
                     style={ { width: "100%", position: 'fixed', left: '0', top: '0', zIndex: '10' } }
                 >
-                    Error al ingresar datos
+                    { mensajeError }
                 </Alert>
             </Fade>
             <CssBaseline />            
             <Box
                 sx={{
-                    marginTop: 8,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
@@ -181,9 +170,7 @@ const CmpRegistro = () => {
                         Sing In
                     </Button>
                 </Box>
-                {/* <h1>Hola</h1> */}
             </Box>
-            <Copyright sx={ { mt: 5 } }/>
         </Container>
     );
 }
