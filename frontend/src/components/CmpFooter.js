@@ -4,7 +4,7 @@ import React from 'react';
 
 const CmpFooter = () => {
     return (
-        <footer style={{ position: 'relative', bottom: '0', width: '100%', backgroundColor: '#2196f3' }}>
+        <footer style={{ position: 'sticky', bottom: '0', width: '100%', backgroundColor: '#2196f3' }}>
             <CssBaseline />
             <Box sx={{ p: 1 }}>
                 <Container maxWidth='lg'>

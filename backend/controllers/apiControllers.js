@@ -17,7 +17,7 @@ const apiControllers = {
                 // Verificamos si el password recibido es igual al registrado en la DB                
                 emailInDb = emailInDb[ 0 ];
                 // Se compara el password recibido con el password hasheado en la DB
-                if( bcryptjs.compareSync(  password ,emailInDb.password ) ) {
+                if( bcryptjs.compareSync(  password , emailInDb.password ) ) {
                     return res.send( 'YES' );
                 }
                 else {

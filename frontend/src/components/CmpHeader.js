@@ -7,7 +7,7 @@ const CmpHeader = () => {
     const [ anchorElNav, setAnchorElNav ] = useState( null );
     const [ anchorElUser, setAnchorElUser ] = useState( null );
 
-    const pages = [ 'Productos', 'Pricing', 'Blog' ];
+    const pages = [ 'Cursos', 'Tareas pendientes' ];
     const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
     const handleCloseNavMenu = () => {
@@ -29,7 +29,7 @@ const CmpHeader = () => {
     return (
         <>
             <CssBaseline />
-            <AppBar position='static'>
+            <AppBar position='fixed'>
                 <Container maxWidth='xl'>
                     <Toolbar disableGutters>
                         <Typography

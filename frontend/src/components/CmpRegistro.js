@@ -27,6 +27,9 @@ const CmpRegistro = () => {
         else {
             setMensajeError( listaErrores[ 0 ] );
             setAlertError( true );
+            setTimeout(() => {
+                setAlertError( false );
+            }, 2000)
         }
     }
 
@@ -34,7 +37,7 @@ const CmpRegistro = () => {
         <Container maxWidth='xs' component='main'>
             <Fade in={ alertError }>
                 <Alert severity='error' 
-                    style={ { width: "100%", position: 'fixed', left: '0', top: '0', zIndex: '10' } }
+                    style={ { width: "100%", position: 'fixed', left: '0', top: '64px', zIndex: '10' } }
                 >
                     { mensajeError }
                 </Alert>
@@ -45,7 +48,7 @@ const CmpRegistro = () => {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                }}
+                }}                
             >                            
                 <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
                     <AccountCircleIcon />
@@ -165,7 +168,7 @@ const CmpRegistro = () => {
                         type='submit'
                         fullWidth
                         variant='contained'
-                        sx={ { mt: 3, mb: 2 } }
+                        sx={ { mt: 3, mb: 2 } }                        
                     >
                         Sing In
                     </Button>
