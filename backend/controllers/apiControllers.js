@@ -1,5 +1,6 @@
 const db = require( '../database/models' );
 const bcryptjs = require( 'bcryptjs' );
+const jwt = require( 'jsonwebtoken' );
 const { buscarEmail } = require('../helpers/consultasUsuarios');
 const apiControllers = {
     home: ( req, res ) => {
@@ -16,14 +17,32 @@ const apiControllers = {
                 }
                 // Verificamos si el password recibido es igual al registrado en la DB                
                 emailInDb = emailInDb[ 0 ];
+                console.log( emailInDb );
                 // Se compara el password recibido con el password hasheado en la DB
                 if( bcryptjs.compareSync(  password , emailInDb.password ) ) {
-                    return res.send( 'YES' );
+                    const jwtToken = jwt.sign(
+                        {
+                            id: emailInDb.id,
+                            email: emailInDb.correo
+                        },
+                        'jswSecretFirma',
+                        {
+                           expiresIn: 300 
+                        }
+                    );
+                    return res.send( {
+                        auth: true,
+                        jwtToken,
+                    } );
                 }
                 else {
                     return res.send( 'Not found' );
                 }                
             })
+    },
+
+    test: ( req, res ) => {
+        res.send( 'This is just a test' );
     }
 };
 
