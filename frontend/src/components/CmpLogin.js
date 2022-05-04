@@ -3,7 +3,7 @@ import { CssBaseline, Grid, Paper, Box, Avatar, Typography, TextField, Button, L
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import imgLogo from '../assets/img/loginP.jpg'
 import { validarFormularioLogin } from '../helpers/validarEntradasFormularios';
-import { sendLoginData } from '../helpers/UsersPetitions';
+import { sendLoginData } from '../services/authServices';
 const LoginComponent = () => {
     const [ inputForm, setInputForm ] = useState( '' );
     const [ alertError, setAlertError ] = useState( false );
@@ -27,12 +27,15 @@ const LoginComponent = () => {
             setAlertError( false );
             sendLoginData( inputForm )
                 .then( res => {
-                    const { data, status } = res;
-                    if( data == 'Not found' ) {
+                    const { auth, jwtToken } = res.data;
+                    if( !auth ) {
                         setAlertError( true );
                         return;
                     }
-                    else if (data == 'YES' ) {
+                    else if ( auth ) {
+                        // Alcamenar el JwtToken en el localStorage
+                        localStorage.setItem( 'userInfo', jwtToken );
+                        console.log( jwtToken );
                         alert( 'Inicio de sesión exitoso' );
                     }
                     

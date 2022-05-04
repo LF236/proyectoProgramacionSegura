@@ -3,13 +3,14 @@ import { Box } from '@mui/system';
 import MenuIcon from '@mui/icons-material/Menu';
 import React, { useState } from 'react';
 import imgAdmin from '../assets/img/admin.jpg';
+import { logout } from '../services/authServices';
 const CmpHeader = () => {
     const [ anchorElNav, setAnchorElNav ] = useState( null );
     const [ anchorElUser, setAnchorElUser ] = useState( null );
 
     const pages = [ 'Cursos', 'Tareas pendientes' ];
-    const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
+    // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+    const settings = [ 'Logout' ];
     const handleCloseNavMenu = () => {
         setAnchorElNav( null );
     }
@@ -24,6 +25,16 @@ const CmpHeader = () => {
 
     const handleOpenUserMenu = ( e ) =>{
         setAnchorElUser( e.currentTarget );
+    }
+
+    const optionsMenuItem = ( e ) => {
+        // Pensar en el uso de un Switch
+        const nameFunction = `${ e.target.innerHTML }`.toLowerCase();
+        switch( nameFunction ) {
+            case 'logout': 
+                logout();
+                break;
+        }
     }
 
     return (
@@ -134,7 +145,7 @@ const CmpHeader = () => {
                                     settings.map( setting => {
                                         return(
                                             <MenuItem key={ setting } onClick={ handleCloseUserMenu }>
-                                                <Typography textAlign='center'>{ setting }</Typography>
+                                                <Typography textAlign='center' onClick={ optionsMenuItem }>{ setting }</Typography>
                                             </MenuItem>
                                         );
                                     } )
