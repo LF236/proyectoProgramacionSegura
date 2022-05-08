@@ -5,12 +5,9 @@ const CmpLanding = () => {
     const { user } = useContext( UserContext );
     // Si el usuario existe en el contexto redirigimos al home
     if( user ) {
-        console.log( user );
         return <Navigate to='/home/' />
     }
     
-    
-
     const testingComponenet = () => {
         console.log( user );
     }

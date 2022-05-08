@@ -14,11 +14,13 @@ const AppEvaluacionCodigo = () => {
     const { user, setUser, isLoading } = useFindUser();
     const RouterList = () => {
         const routesArr = useRoutes([
-            { path: '/', element: <CmpLanding />, index: true},
-            { path: '/home', element: <CmpHome /> },
+            { path: '/', element: <CmpLanding /> },
+            // { path: '/home', element: <CmpHome /> },
             { path: '/login', element: <CmpLogin /> },
             { path:  '/registro', element: <CmpRegistro />},
-            { path: '/test', element: <CmpFooter /> }
+            { path: '/test', element: <CmpFooter /> },
+            { path: '/home', element: <CmpPrivateRoute component={ CmpHome } />, index: true }
+            // { path: '/home', element:  }
         ]);
         return routesArr;
     } 

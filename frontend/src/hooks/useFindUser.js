@@ -7,7 +7,7 @@ const useFindUser = () => {
     useEffect( () => {
         findUser()
             .then( res => {
-                console.log( res );
+                console.log( 'Data cargada con el Hook' );
                 setUser( res.data.currentUser );
                 setLoading( false );
             } )
