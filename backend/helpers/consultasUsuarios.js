@@ -11,6 +11,22 @@ const buscarEmail = ( cadena ) => {
     })
 }
 
+const buscarUsuario = ( id ) => {
+    return new Promise( async ( resolve, reject ) => {
+        try {
+            const user = await db.Usuario.findByPk( id, {
+                raw: true,
+                attributes: [ 'nombre', 'apellidoPaterno', 'apellidoMaterno', 'correo', 'matricula' ]
+            } );
+            resolve( user );
+        }
+        catch {
+            reject( false );
+        }
+    });
+}
+
 module.exports = {
-    buscarEmail
+    buscarEmail,
+    buscarUsuario
 }

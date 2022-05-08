@@ -1,7 +1,7 @@
 const db = require( '../database/models' );
 const bcryptjs = require( 'bcryptjs' );
 const jwt = require( 'jsonwebtoken' );
-const { buscarEmail } = require('../helpers/consultasUsuarios');
+const { buscarEmail, buscarUsuario } = require('../helpers/consultasUsuarios');
 const apiControllers = {
     home: ( req, res ) => {
         res.send( 'This is de API' );
@@ -19,7 +19,7 @@ const apiControllers = {
                     } );
                 }
                 // Verificamos si el password recibido es igual al registrado en la DB                
-                emailInDb = emailInDb[ 0 ];
+                emailInDb = emailInDb[ 0 ];  
                 // Se compara el password recibido con el password hasheado en la DB
                 if( bcryptjs.compareSync(  password , emailInDb.password ) ) {
                     const jwtToken = jwt.sign(
@@ -43,6 +43,17 @@ const apiControllers = {
                     } );
                 }                
             })
+    },
+
+    userInfo: async ( req, res ) => {
+        const idUsuario = req.userId;
+        // Obtenemos la información del usuario actual a través de una Query a la DB
+        // ->NO enviar enformación sensible
+        const currentUser = await buscarUsuario( idUsuario );
+        res.send({
+            auth: true,
+            currentUser
+        });
     },
 
     test: ( req, res ) => {
