@@ -5,10 +5,11 @@ import imgLogo from '../assets/img/loginP.jpg'
 import { validarFormularioLogin } from '../helpers/validarEntradasFormularios';
 import { sendLoginData } from '../services/authServices';
 import { UserContext } from '../hooks/UserContext';
+import CmpLoading from './CmpLoading';
 const LoginComponent = () => {
     const [ inputForm, setInputForm ] = useState( '' );
     const [ alertError, setAlertError ] = useState( false );
-    const { user } = useContext( UserContext );
+    const { user, isLoading } = useContext( UserContext );
     const handleInputFormChange = ( e ) => {
         setInputForm({
             ...inputForm,
@@ -56,6 +57,11 @@ const LoginComponent = () => {
                 { ' ' }
             </Typography>           
         );
+    }
+
+    // Verificamos que el hook no este cargando NADA con la propiedad 'isLoading'
+    if( isLoading ) {
+        return <CmpLoading />
     }
 
     // Verificamos si hay una sesión activa, si lo es redirigimos al home

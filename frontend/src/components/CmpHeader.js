@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import imgAdmin from '../assets/img/admin.jpg';
 import { logout } from '../services/authServices';
 const CmpHeader = ( { userInfo } ) => {
+   
     const [ anchorElNav, setAnchorElNav ] = useState( null );
     const [ anchorElUser, setAnchorElUser ] = useState( null );
 
@@ -39,8 +40,7 @@ const CmpHeader = ( { userInfo } ) => {
                 break;
         }
     }
-    const testing = false;
-    console.log( userInfo );
+
     if( !userInfo ) {
         return(
             <>

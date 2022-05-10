@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { CssBaseline, Grid, Paper, Box, Avatar, Typography, TextField, Button, Link, Alert, Fade, Container, Checkbox, FormControl, RadioGroup, Radio, FormLabel, FormControlLabel, PaperProps } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { validarFormularioRegistro } from '../helpers/validarEntradasFormularios';
-
+import { UserContext } from '../hooks/UserContext';
+import CmpLoading from './CmpLoading';
 const CmpRegistro = () => {
     const [ form, setForm ] = useState( '' );
     const [ alertError, setAlertError ] = useState( false );
     const [ mensajeError, setMensajeError ] = useState( '' );
-
+    const { user, isLoading } = useContext( UserContext );
     const handleInputFormChange = ( e ) => {
         setForm({
             ...form,
@@ -31,6 +32,16 @@ const CmpRegistro = () => {
                 setAlertError( false );
             }, 2000)
         }
+    }
+
+    // Verificamos que el hook no este cargando NADA con la propiedad 'isLoading'
+    if( isLoading ) {
+        return <CmpLoading />
+    }
+
+    // Verificamos si hay una sesión activa, si lo es redirigimos al home
+    if( user ) {
+        return window.location = '/home';
     }
 
     return (
