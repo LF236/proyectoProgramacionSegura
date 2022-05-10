@@ -27,7 +27,7 @@ const AppEvaluacionCodigo = () => {
 
     return (
         <>
-            <CmpHeader />
+            <CmpHeader userInfo={ user } />
             <main>
                 <UserContext.Provider value={ { user, setUser, isLoading } }>
                     <Router styles={ { backgroundColor: 'red' } }>

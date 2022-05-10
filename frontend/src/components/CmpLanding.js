@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { UserContext } from '../hooks/UserContext';
 import { Navigate } from 'react-router-dom';
-import { Grid, Paper, Box, Typography, Button } from '@mui/material';
+import { Grid, Paper, Box, Typography, Button, Link } from '@mui/material';
 import imgLogo from '../assets/img/demo.jpg'
 const CmpLanding = () => {
     const { user } = useContext( UserContext );
@@ -32,11 +32,15 @@ const CmpLanding = () => {
                         </p>
                         <div className='buttons'>
                             <Button variant="contained" size="large">
-                                Iniciar Sesión
+                                <Link href="/login" underline="none" color='inherit'>
+                                    Iniciar Sesión
+                                </Link>                                
                             </Button>
 
-                            <Button variant="contained" size="large">
-                                Registro
+                            <Button variant="outlined" size="large">
+                                <Link href='/registro' underline='none' color='inherit'>
+                                    Registro                                                                    
+                                </Link>                                
                             </Button>
                         </div>
                     </Box>

@@ -4,7 +4,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import React, { useState } from 'react';
 import imgAdmin from '../assets/img/admin.jpg';
 import { logout } from '../services/authServices';
-const CmpHeader = () => {
+const CmpHeader = ( { userInfo } ) => {
     const [ anchorElNav, setAnchorElNav ] = useState( null );
     const [ anchorElUser, setAnchorElUser ] = useState( null );
 
@@ -39,128 +39,163 @@ const CmpHeader = () => {
                 break;
         }
     }
-
-    return (
-        <>
-            <CssBaseline />
-            <AppBar position='fixed'>
-                <Container maxWidth='xl'>
-                    <Toolbar disableGutters>
-                        <Typography
-                            variant='h6'
-                            noWrap
-                            component='div'
-                            sx={ { mr: 2, display: { xs: 'none', md: 'flex' } } }
-                        >
-                            <Link href='/' color='inherit' underline='none'>FEI</Link>
-                        </Typography>
-
-                        <Box sx={ { flexGrow: 1, display: { xs: 'flex', md: 'none' } } }>
-                            <IconButton
-                                size='large'
-                                aria-label='account of current user'
-                                aria-controls='menu-appbar'
-                                aria-haspopup='true'
-                                color='inherit'
-                                onClick={ handleOpenNavMenu }
+    const testing = false;
+    console.log( userInfo );
+    if( !userInfo ) {
+        return(
+            <>
+                <CssBaseline />
+                <AppBar position='fixed'>
+                    <Container maxWidth='x1'>
+                        <Toolbar disableGutters>
+                            <Typography
+                                variant='h6'
+                                noWrap
+                                component='div'
+                                sx={ { mr: 2, display: { xs: 'none', md: 'flex' } } }
                             >
-                                <MenuIcon />
-                            </IconButton>
-                            <Menu
-                                id='menu-appbar'
-                                anchorEl={ anchorElNav }
-                                anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'left'
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'left'
-                                }}
-                                open={ Boolean( anchorElNav ) }
-                                onClose={ handleCloseNavMenu }
-                                sx={{
-                                    display: { xs: 'block', md: 'none' }
-                                }}
+                                <Link href='/' color='inherit' underline='none'>FEI</Link>
+                            </Typography>
+
+                            <Box sx={ { flexGrow: 1, display: { xs: 'flex', md: 'none' } } }>
+                                <Typography
+                                    variant='h6'
+                                    noWrap
+                                    component='div'
+                                    sx={ { flexGrow: 1, display: { xs: 'flex', md: 'none' } } }
+                                >
+                                    <Link href='/' color='inherit' underline='none'>FEI</Link>
+                                </Typography>
+                            </Box>
+                        </Toolbar>
+                    </Container>
+
+                </AppBar>
+            </>
+        )
+    } else {
+        return (
+            <>
+                <CssBaseline />
+                <AppBar position='fixed'>
+                    <Container maxWidth='xl'>
+                        <Toolbar disableGutters>
+                            <Typography
+                                variant='h6'
+                                noWrap
+                                component='div'
+                                sx={ { mr: 2, display: { xs: 'none', md: 'flex' } } }
                             >
+                                <Link href='/' color='inherit' underline='none'>FEI</Link>
+                            </Typography>
+
+                            <Box sx={ { flexGrow: 1, display: { xs: 'flex', md: 'none' } } }>
+                                <IconButton
+                                    size='large'
+                                    aria-label='account of current user'
+                                    aria-controls='menu-appbar'
+                                    aria-haspopup='true'
+                                    color='inherit'
+                                    onClick={ handleOpenNavMenu }
+                                >
+                                    <MenuIcon />
+                                </IconButton>
+                                <Menu
+                                    id='menu-appbar'
+                                    anchorEl={ anchorElNav }
+                                    anchorOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'left'
+                                    }}
+                                    keepMounted
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'left'
+                                    }}
+                                    open={ Boolean( anchorElNav ) }
+                                    onClose={ handleCloseNavMenu }
+                                    sx={{
+                                        display: { xs: 'block', md: 'none' }
+                                    }}
+                                >
+                                    {
+                                        pages.map( page => {
+                                            return(
+                                                <MenuItem key={ page } onClick={ handleCloseNavMenu }>
+                                                    <Typography textAlign='center'>{ page }</Typography>
+                                                </MenuItem>
+                                            )
+                                        } )
+                                    }
+                                </Menu>
+                            </Box>
+
+                            <Typography
+                                variant='h6'
+                                noWrap
+                                component='div'
+                                sx={ { flexGrow: 1, display: { xs: 'flex', md: 'none' } } }
+                            >
+                                <Link href='/' color='inherit' underline='none'>FEI</Link>
+                            </Typography>
+
+                            <Box sx={ { flewGrow: 1, display: { xs: 'none', md: 'flex' } } }>
                                 {
                                     pages.map( page => {
                                         return(
-                                            <MenuItem key={ page } onClick={ handleCloseNavMenu }>
-                                                <Typography textAlign='center'>{ page }</Typography>
-                                            </MenuItem>
+                                            <Button
+                                                key={ page }
+                                                sx={ { color: 'white', my: 2, display: 'block' } }
+                                                onClick={ handleCloseNavMenu }
+                                            >
+                                                { page }
+                                            </Button>
                                         )
                                     } )
                                 }
-                            </Menu>
-                        </Box>
+                            </Box>
 
-                        <Typography
-                            variant='h6'
-                            noWrap
-                            component='div'
-                            sx={ { flexGrow: 1, display: { xs: 'flex', md: 'none' } } }
-                        >
-                            <Link href='/' color='inherit' underline='none'>FEI</Link>
-                        </Typography>
+                            <Box sx={ { flexGrow: 0, position: 'absolute', right: 0 } }>
+                                <Tooltip title='Open Settings'>
+                                    <IconButton sx={ { p: 0 } } onClick={ handleOpenUserMenu }>
+                                        <Avatar alt='img_user' src={ imgAdmin }/>
+                                    </IconButton>
+                                </Tooltip>
 
-                        <Box sx={ { flewGrow: 1, display: { xs: 'none', md: 'flex' } } }>
-                            {
-                                pages.map( page => {
-                                    return(
-                                        <Button
-                                            key={ page }
-                                            sx={ { color: 'white', my: 2, display: 'block' } }
-                                            onClick={ handleCloseNavMenu }
-                                        >
-                                            { page }
-                                        </Button>
-                                    )
-                                } )
-                            }
-                        </Box>
+                                <Menu
+                                    sx={ { mt: '45px' } }
+                                    id='menu-appbar'
+                                    anchorEl={ anchorElUser }
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right'
+                                    }}
+                                    keepMounted
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right'
+                                    }}
+                                    open={ Boolean( anchorElUser ) }
+                                    onClose={ handleCloseUserMenu }
+                                >
+                                    {
+                                        settings.map( setting => {
+                                            return(
+                                                <MenuItem key={ setting } onClick={ handleCloseUserMenu }>
+                                                    <Typography textAlign='center' onClick={ optionsMenuItem }>{ setting }</Typography>
+                                                </MenuItem>
+                                            );
+                                        } )
+                                    }
+                                </Menu>
+                            </Box>
 
-                        <Box sx={ { flexGrow: 0, position: 'absolute', right: 0 } }>
-                            <Tooltip title='Open Settings'>
-                                <IconButton sx={ { p: 0 } } onClick={ handleOpenUserMenu }>
-                                    <Avatar alt='img_user' src={ imgAdmin }/>
-                                </IconButton>
-                            </Tooltip>
-
-                            <Menu
-                                sx={ { mt: '45px' } }
-                                id='menu-appbar'
-                                anchorEl={ anchorElUser }
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right'
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right'
-                                }}
-                                open={ Boolean( anchorElUser ) }
-                                onClose={ handleCloseUserMenu }
-                            >
-                                {
-                                    settings.map( setting => {
-                                        return(
-                                            <MenuItem key={ setting } onClick={ handleCloseUserMenu }>
-                                                <Typography textAlign='center' onClick={ optionsMenuItem }>{ setting }</Typography>
-                                            </MenuItem>
-                                        );
-                                    } )
-                                }
-                            </Menu>
-                        </Box>
-
-                    </Toolbar>
-                </Container>
-            </AppBar>
-        </>
-    );
+                        </Toolbar>
+                    </Container>
+                </AppBar>
+            </>
+        );
+    }
 }
 
 export default CmpHeader;

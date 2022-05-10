@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
 import { CssBaseline, Grid, Paper, Box, Avatar, Typography, TextField, Button, Link, Alert, Fade } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import imgLogo from '../assets/img/loginP.jpg'
 import { validarFormularioLogin } from '../helpers/validarEntradasFormularios';
 import { sendLoginData } from '../services/authServices';
+import { UserContext } from '../hooks/UserContext';
 const LoginComponent = () => {
     const [ inputForm, setInputForm ] = useState( '' );
     const [ alertError, setAlertError ] = useState( false );
-    const navigate = useNavigate();
+    const { user } = useContext( UserContext );
     const handleInputFormChange = ( e ) => {
         setInputForm({
             ...inputForm,
@@ -38,7 +38,7 @@ const LoginComponent = () => {
                         // Alcamenar el JwtToken en el localStorage
                         localStorage.setItem( 'userInfo', jwtToken );
                         // Redirigimos a la la página de inicio
-                        return navigate( '/' );
+                        return window.location = '/';
                     }
                     
                 } )
@@ -58,7 +58,11 @@ const LoginComponent = () => {
         );
     }
 
-
+    // Verificamos si hay una sesión activa, si lo es redirigimos al home
+    if( user ) {
+        return window.location = '/home';
+    }
+    
     return (
         <>
             <Grid container component='main' sx={{ height: '100vh' }}>
@@ -153,6 +157,7 @@ const LoginComponent = () => {
             </Grid>
         </>
     );
+    
 }
 
 export default LoginComponent;
