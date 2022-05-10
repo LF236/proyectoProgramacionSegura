@@ -1,5 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Koulen&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans&display=swap");
 main {
-  margin-top: 80px;
+  margin-top: 64px;
   position: relative;
   min-height: 90vh;
 }
@@ -13,5 +15,26 @@ main {
     color: black;
     font-size: 10px;
   }
+}
+
+.landing_page .name_app {
+  color: #2196f3;
+  font-family: "Koulen", cursive;
+  font-size: 2rem !important;
+}
+
+.landing_page .content_app {
+  font-size: 1rem;
+  font-family: "PT Sans", sans-serif;
+}
+
+.landing_page .buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.landing_page .buttons Button {
+  margin-right: 10px;
 }
 /*# sourceMappingURL=styles.css.map */

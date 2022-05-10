@@ -22,6 +22,7 @@ export const logout = () => {
     const userInfo = localStorage.getItem( 'userInfo' );
     if( userInfo ) {
         localStorage.removeItem( 'userInfo' );
+        return true;
     } else {
         return;
     }

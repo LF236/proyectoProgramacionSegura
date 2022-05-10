@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CssBaseline, Grid, Paper, Box, Avatar, Typography, TextField, Button, Link, Alert, Fade } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import imgLogo from '../assets/img/loginP.jpg'
@@ -7,6 +8,7 @@ import { sendLoginData } from '../services/authServices';
 const LoginComponent = () => {
     const [ inputForm, setInputForm ] = useState( '' );
     const [ alertError, setAlertError ] = useState( false );
+    const navigate = useNavigate();
     const handleInputFormChange = ( e ) => {
         setInputForm({
             ...inputForm,
@@ -35,8 +37,8 @@ const LoginComponent = () => {
                     else if ( auth ) {
                         // Alcamenar el JwtToken en el localStorage
                         localStorage.setItem( 'userInfo', jwtToken );
-                        console.log( jwtToken );
-                        alert( 'Inicio de sesión exitoso' );
+                        // Redirigimos a la la página de inicio
+                        return navigate( '/' );
                     }
                     
                 } )

@@ -11,7 +11,7 @@ const CmpPrivateRoute = ( props ) => {
     if( isLoading ) {
         return <CmpLoading />;
     }
-
+   
     if( user ) {
         return( <Component /> );
         // alert( 'Si pasa' )

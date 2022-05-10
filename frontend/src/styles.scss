@@ -1,6 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Koulen&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
+$fontMain: 'Koulen', cursive;
+$fontSecond: 'PT Sans', sans-serif;
+$colorMain: rgb(33, 150, 243);
 main {
     // margin-bottom: 50px;
-    margin-top: 80px;
+    margin-top: 64px;
     position: relative;
     min-height: 90vh;
 }
@@ -10,5 +15,25 @@ main {
     @media (max-width: 410px) {
         color: black;
         font-size: 10px;
+    }
+}
+
+.landing_page {
+    .name_app {
+        color: $colorMain;
+        font-family: $fontMain;
+        font-size: 2rem !important;
+    }
+
+    .content_app {
+        font-size: 1rem;
+        font-family: $fontSecond;
+    }
+
+    .buttons {
+        display: flex;
+        Button {
+            margin-right: 10px;
+        }
     }
 }

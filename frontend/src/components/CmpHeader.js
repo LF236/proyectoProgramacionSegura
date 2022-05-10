@@ -1,4 +1,4 @@
-import { AppBar, Avatar, Button, Container, CssBaseline, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography } from '@mui/material';
+import { AppBar, Avatar, Button, Container, CssBaseline, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography, Link } from '@mui/material';
 import { Box } from '@mui/system';
 import MenuIcon from '@mui/icons-material/Menu';
 import React, { useState } from 'react';
@@ -11,6 +11,7 @@ const CmpHeader = () => {
     const pages = [ 'Cursos', 'Tareas pendientes' ];
     // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
     const settings = [ 'Logout' ];
+
     const handleCloseNavMenu = () => {
         setAnchorElNav( null );
     }
@@ -32,7 +33,9 @@ const CmpHeader = () => {
         const nameFunction = `${ e.target.innerHTML }`.toLowerCase();
         switch( nameFunction ) {
             case 'logout': 
-                logout();
+                if( logout() ) {
+                    window.location = '/home';
+                }
                 break;
         }
     }
@@ -49,7 +52,7 @@ const CmpHeader = () => {
                             component='div'
                             sx={ { mr: 2, display: { xs: 'none', md: 'flex' } } }
                         >
-                            LOGO
+                            <Link href='/' color='inherit' underline='none'>FEI</Link>
                         </Typography>
 
                         <Box sx={ { flexGrow: 1, display: { xs: 'flex', md: 'none' } } }>
@@ -99,7 +102,7 @@ const CmpHeader = () => {
                             component='div'
                             sx={ { flexGrow: 1, display: { xs: 'flex', md: 'none' } } }
                         >
-                            LOGO
+                            <Link href='/' color='inherit' underline='none'>FEI</Link>
                         </Typography>
 
                         <Box sx={ { flewGrow: 1, display: { xs: 'none', md: 'flex' } } }>
