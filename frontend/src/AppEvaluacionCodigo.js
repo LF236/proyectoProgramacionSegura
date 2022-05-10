@@ -10,6 +10,7 @@ import './styles.css';
 import useFindUser from './hooks/useFindUser';
 import CmpLanding from './components/CmpLanding';
 import CmpPrivateRoute from './components/CmpPrivateRoute';
+import CmpNotFound from './components/CmpNotFound';
 const AppEvaluacionCodigo = () => {
     const { user, setUser, isLoading } = useFindUser();
     const RouterList = () => {
@@ -19,7 +20,8 @@ const AppEvaluacionCodigo = () => {
             { path: '/login', element: <CmpLogin /> },
             { path:  '/registro', element: <CmpRegistro />},
             { path: '/test', element: <CmpFooter /> },
-            { path: '/home', element: <CmpPrivateRoute component={ CmpHome } />, index: true }
+            { path: '/home', element: <CmpPrivateRoute component={ CmpHome } />, index: true },
+            { path: '*', element: <CmpNotFound /> }
             // { path: '/home', element:  }
         ]);
         return routesArr;

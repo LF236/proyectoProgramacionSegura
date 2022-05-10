@@ -37,4 +37,43 @@ main {
 .landing_page .buttons Button {
   margin-right: 10px;
 }
+
+.not-found {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.not-found .not-found-top {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.not-found .not-found-bottom {
+  width: 100%;
+  text-align: center;
+  font-family: "Koulen", cursive;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  -webkit-transition: all .5s;
+  transition: all .5s;
+}
+
+.not-found .not-found-bottom h2 {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.not-found .not-found-bottom:hover {
+  color: #2196f3;
+}
 /*# sourceMappingURL=styles.css.map */

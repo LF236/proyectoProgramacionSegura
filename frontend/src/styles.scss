@@ -37,3 +37,28 @@ main {
         }
     }
 }
+
+.not-found {
+    display: flex;
+    flex-wrap: wrap;
+    .not-found-top {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .not-found-bottom {
+        width: 100%;
+        text-align: center;
+        font-family: $fontMain;
+        user-select: none;
+        h2 {
+            font-size: 1.4rem;
+            margin: 0;
+        }
+        transition: all .5s;
+        &:hover {
+            color: $colorMain;
+        }
+    }
+}
