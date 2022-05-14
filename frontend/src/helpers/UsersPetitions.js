@@ -20,6 +20,26 @@ export const sendLoginData = ( data ) => {
     })
 }
 
+export const sendRegistroData = ( data ) => {
+    return new Promise( ( resolve, reject ) => {
+        try {
+            const URI = `http://${ process.env.REACT_APP_IP_API }:8000/api/user`;
+            axios({
+                method: 'POST',
+                url: URI,
+                data
+            }).then( res => {
+                resolve( res );
+            } ).catch( err => {
+                reject( err );
+            } )
+        }
+        catch( err ) {
+            reject( err );
+        }
+    } )
+}
+
 export const findUser = () => {
     return new Promise( ( resolve, reject ) => {
         try {

@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+$headerHeight: 50px;
+$mainFont: 'Oswald', sans-serif;
+$secondFont: 'Raleway', sans-serif;
+$mainColor: #1976d2;
+$secondColor: rgb(33, 150, 243);
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header {
+    width: 100%;
+    height: $headerHeight;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $mainColor;
+    p {
+        font-size: 1.5rem;
+        font-weight: bold;
+        font-family: $mainFont;
+        color: #fff;
+    }
+}
+
+main {
+    .section-img {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        img {
+            display: block;
+        }
+    }
+    .mensaje {
+        width: 100%;
+        font-size: 1.2rem;
+        font-family: $mainFont;
+        color: #444;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .nombre {
+        font-size: 1.5rem;
+    }
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: $headerHeight;
+    text-align: center;
+    background-color: $secondColor;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px 0;
+    small {
+        width: 100%;
+        color: #fff;
+        font-family: $secondFont;
+        font-weight: bold;
+    }
+}

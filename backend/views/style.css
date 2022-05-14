@@ -1,0 +1,80 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+header {
+  width: 100%;
+  height: 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #1976d2;
+}
+
+header p {
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-family: "Oswald", sans-serif;
+  color: #fff;
+}
+
+main .section-img {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+main .section-img img {
+  display: block;
+}
+
+main .mensaje {
+  width: 100%;
+  font-size: 1.2rem;
+  font-family: "Oswald", sans-serif;
+  color: #444;
+  font-weight: bold;
+  text-align: center;
+}
+
+main .nombre {
+  font-size: 1.5rem;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  background-color: #2196f3;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  padding: 10px 0;
+}
+
+footer small {
+  width: 100%;
+  color: #fff;
+  font-family: "Raleway", sans-serif;
+  font-weight: bold;
+}
+/*# sourceMappingURL=style.css.map */

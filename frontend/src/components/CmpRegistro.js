@@ -3,6 +3,7 @@ import { CssBaseline, Grid, Paper, Box, Avatar, Typography, TextField, Button, L
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { validarFormularioRegistro } from '../helpers/validarEntradasFormularios';
 import { UserContext } from '../hooks/UserContext';
+import { sendRegistroData } from '../helpers/UsersPetitions';
 import CmpLoading from './CmpLoading';
 const CmpRegistro = () => {
     const [ form, setForm ] = useState( '' );
@@ -23,7 +24,21 @@ const CmpRegistro = () => {
         const listaErrores = validarFormularioRegistro( form );
         if( listaErrores.length == 0 ) {
             // Hacemos la peticion
-            alert( 'Todo bien' );
+            console.log( 'Inicia el proceso de registro' );
+            sendRegistroData( form )
+            .then( res => {
+                console.log( res );
+            })
+            .catch( err => {
+                // Verificamos que el error tenga un mensaje de error
+                if( err.response.data.error ) {
+                    setMensajeError( err.response.data.error );
+                    setAlertError( true );
+                    setTimeout(() => {
+                        setAlertError( false );
+                    }, 2000) 
+                }
+            } )
         }
         else {
             setMensajeError( listaErrores[ 0 ] );

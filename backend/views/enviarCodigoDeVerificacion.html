@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Código de verificación</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Oswald&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        header {
+            width: 100%;
+            height: 50px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            background-color: #1976d2;
+        }
+
+        header p {
+            font-size: 1.5rem;
+            font-weight: bold;
+            font-family: "Oswald", sans-serif;
+            color: #fff;
+        }
+
+        main .section-img {
+            width: 100%;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+        }
+
+        main .section-img img {
+            display: block;
+        }
+
+        main .mensaje {
+            width: 100%;
+            font-size: 1.2rem;
+            font-family: "Oswald", sans-serif;
+            color: #444;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        main .nombre {
+            font-size: 1.5rem;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 50px;
+            text-align: center;
+            background-color: #2196f3;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            padding: 10px 0;
+        }
+
+        footer small {
+            width: 100%;
+            color: #fff;
+            font-family: "Raleway", sans-serif;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <p>Bienvenido - Sistema de Evaluación de Código UV</p>
+    </header>
+
+    <main>
+        <section class="mensaje nombre">
+            <p>Hola: {{ nombre }}</p>
+        </section>
+        <section class="section-img">
+            <img src="https://media3.giphy.com/media/1xoZj3qg7DptBiFhmL/giphy.gif?cid=790b761145dc958b8d093314a60f7ae7d4c4e325ed91fca1&rid=giphy.gif&ct=s"
+                alt="img_luzio" />
+
+        </section>
+        <section class="mensaje">
+            <p>Código de Verificación: {{ codigoVerificacion }}</p>
+        </section>
+    </main>
+
+    <footer>
+        <small>No olvides ingresar el código despues de 3 minutos de recibir el correo</small>
+        <br />
+        <small>Si no tendrás que realizar el proceso nuevamente</small>
+    </footer>
+</body>
+
+</html>

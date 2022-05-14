@@ -2,11 +2,30 @@ const db = require( '../database/models' );
 const buscarEmail = ( cadena ) => {
     return new Promise( async ( resolve, reject ) => {
         try {
-            const emailInDb = await db.Usuario.findAll({ where: { correo: cadena }, raw: true } );
+            const emailInDb = await db.Usuario.findOne({ 
+                where: { correo: cadena }, 
+                raw: true ,
+                attributes: [ 'correo' ],
+            } );
             resolve( emailInDb );
         }
         catch( err ) {
             resolve( false );
+        }
+    })
+}
+
+const buscarMatricula = ( matricula )=> {
+    return new Promise( async ( resolve, reject ) => {
+        try {
+            const matriculaInDb = db.Usuario.findOne({
+                where: { matricula: matricula },
+                raw: true,
+                attributes: [ 'matricula' ]
+            });
+            resolve( matriculaInDb );
+        }catch( err ) {
+            reject( err );
         }
     })
 }
@@ -28,5 +47,6 @@ const buscarUsuario = ( id ) => {
 
 module.exports = {
     buscarEmail,
-    buscarUsuario
+    buscarUsuario,
+    buscarMatricula
 }
