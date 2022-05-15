@@ -27,7 +27,24 @@ const CmpRegistro = () => {
             console.log( 'Inicia el proceso de registro' );
             sendRegistroData( form )
             .then( res => {
-                console.log( res );
+                const { temporalDataNewUser } = res.data;
+                // Verificamos que el token se haya generado correctamente
+                if( temporalDataNewUser ) {
+                    // Eliminamos el token si es que se encuentra ya en el localStorage
+                    localStorage.removeItem( 'temporalDataNewUser' );
+                    // Almacenar el token en el localStorage
+                    localStorage.setItem( 'temporalDataNewUser', temporalDataNewUser );
+                    // Mostrar el modal para introducir el codigo de registro
+                    console.log( temporalDataNewUser );
+                }
+                else {
+                    setMensajeError( 'Error en el servidor, notifique al administrador' );
+                    setAlertError( true );
+                    setTimeout(() => {
+                        setAlertError( false );
+                    }, 2000) 
+                }
+                
             })
             .catch( err => {
                 // Verificamos que el error tenga un mensaje de error

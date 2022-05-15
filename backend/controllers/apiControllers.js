@@ -2,7 +2,7 @@ const db = require( '../database/models' );
 const bcryptjs = require( 'bcryptjs' );
 const jwt = require( 'jsonwebtoken' );
 const { buscarEmail, buscarUsuario, buscarMatricula } = require('../helpers/consultasUsuarios');
-const { sendVerificationCode } = require('../helpers/apiCorreo');
+const { sendVerificationCode, generateVerificationCode } = require('../helpers/apiCorreo');
 const apiControllers = {
     home: ( req, res ) => {
         res.send( 'This is de API' );
@@ -47,7 +47,6 @@ const apiControllers = {
     },
 
     registrarUsuario: async ( req, res ) => {
-        console.log( req.body );
         const dataUsuarioNuevo = req.body;
         // Verificamos que el correo del usuario no se encuentre registrado 
         const emailInDb =  await buscarEmail( dataUsuarioNuevo.correo );
@@ -61,20 +60,23 @@ const apiControllers = {
             return res.status( 403 ).send( { error: 'La matricula ya se encuentra registrada' } );
         }
         // Enviamos un correo con el código de confirmación que debe ser introducido para poder terminar el proceso de verificación
-        console.log( dataUsuarioNuevo );
-        const sendCode = await sendVerificationCode( dataUsuarioNuevo.correo, `${ dataUsuarioNuevo.nombre } ${ dataUsuarioNuevo.apellidoPaterno }` );
+        const codigoVerificacion = generateVerificationCode();
+        const sendCode = await sendVerificationCode( dataUsuarioNuevo.correo, `${ dataUsuarioNuevo.nombre } ${ dataUsuarioNuevo.apellidoPaterno }`, codigoVerificacion );
         // Si al mandar un correo sale mal ( correo falso ) mandar mensaje de error
         if( !sendCode ) {
             return res.status( 403 ).send( { error: 'Error al enviar el código de verificación, verifica si tienes acceso' } );
         }
+        // ----> SI TODO SALE BIEN
+        // Agregamos el codigo de verificacion a la data del usuario 
+        dataUsuarioNuevo[ 'codigoVerificacion' ] = codigoVerificacion;
         // Creamos un nuevo token almacenando la data del usuario de manera temporal
-        // const temporalDataNewUser = jsw.sing(
-        //     dataUsuarioNuevo,
-        //     'jswSecretFirma',{
-        //         expiresIn: 300
-        //     }
-        // )
-        res.send( 'YEAH' );
+        const temporalDataNewUser = jwt.sign(
+            dataUsuarioNuevo,
+            'jswSecretFirma',{
+                expiresIn: 300
+            }
+        );
+        res.status( 200 ).send( { temporalDataNewUser: temporalDataNewUser } );
     },
 
     userInfo: async ( req, res ) => {

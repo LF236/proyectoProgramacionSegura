@@ -19,13 +19,13 @@ const transporter = nodeMailer.createTransport({
 });
 
 // Funcion para enviar un correo electronico
-const sendVerificationCode = ( emailTo, nombre ) => {
+const sendVerificationCode = ( emailTo, nombre, codigoVerificacion ) => {
     return new Promise( ( resolve, reject ) => {
         const emailPath = path.join( __dirname, '../views/enviarCodigoDeVerificacion.html' );
         const source = fs.readFileSync( emailPath, 'utf-8' ).toString();
         const template = handlebars.compile( source );
         const replacements = {
-            codigoVerificacion: generateVerificationCode(),
+            codigoVerificacion: codigoVerificacion,
             nombre: nombre
         };
         const htmlToSend = template( replacements );
@@ -49,5 +49,6 @@ const sendVerificationCode = ( emailTo, nombre ) => {
 }
 
 module.exports = {
-    sendVerificationCode
+    sendVerificationCode,
+    generateVerificationCode
 }

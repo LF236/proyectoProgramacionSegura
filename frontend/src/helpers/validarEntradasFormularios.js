@@ -3,6 +3,11 @@ const validarEmail = email => {
     return re.test(email);
 }
 
+const validarCodigo = codigo => {
+    const re = new RegExp( '^[0-9]*$' );
+    return re.test( codigo );
+}
+
 export const validarFormularioLogin = ( data = {} ) => {
     let bandForm = true;
     // Si la data es una cadena vacia}
@@ -71,5 +76,15 @@ export const validarFormularioRegistro = ( data = {} ) => {
     // Verificamos que se haya seleccionado un tipo de cuenta
     if( data.tipoCuenta == undefined ) listaErrores.push( 'Selecciona el tipo de cuenta' ); 
 
+    return listaErrores;
+}
+
+export const validarCodigoVerificacionRegistro = ( data = {} ) => {
+    const listaErrores = [];
+    const { codigoVerificacion } = data;
+    if( codigoVerificacion.length == 0 ) listaErrores.push( 'Introduce el código de verificación' );
+    if( codigoVerificacion.length < 4 ) listaErrores.push( 'El código de verificación es incorrecto' );
+    if( !validarCodigo( codigoVerificacion ) ) listaErrores.push( 'Verifica que el código sea correcto' );
+    
     return listaErrores;
 }
