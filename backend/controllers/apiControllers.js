@@ -1,6 +1,7 @@
 const db = require( '../database/models' );
 const bcryptjs = require( 'bcryptjs' );
 const jwt = require( 'jsonwebtoken' );
+const { v4: uuid } = require( 'uuid' );
 const { buscarEmail, buscarUsuario, buscarMatricula } = require('../helpers/consultasUsuarios');
 const { sendVerificationCode, generateVerificationCode } = require('../helpers/apiCorreo');
 const apiControllers = {
@@ -10,7 +11,6 @@ const apiControllers = {
 
     processLogin: async ( req, res ) => {
         const { email, password } = req.body;
-        console.log( password );
         // Buscar si el email esta registrado en la DB
         buscarEmail( email )
             .then(emailInDb => {
@@ -20,9 +20,10 @@ const apiControllers = {
                     } );
                 }
                 // Verificamos si el password recibido es igual al registrado en la DB                
-                emailInDb = emailInDb[ 0 ];  
+                emailInDb = emailInDb[ 0 ]; 
+                
                 // Se compara el password recibido con el password hasheado en la DB
-                if( bcryptjs.compareSync(  password , emailInDb.password ) ) {
+                if( bcryptjs.compareSync(  password , emailInDb.password ) ) {                    
                     const jwtToken = jwt.sign(
                         {
                             id: emailInDb.id,
@@ -44,14 +45,18 @@ const apiControllers = {
                     } );
                 }                
             })
+            .catch( err => {
+                res.status( 500 ).send( 'ERR' );
+            } )
     },
 
     registrarUsuario: async ( req, res ) => {
         const dataUsuarioNuevo = req.body;
         // Verificamos que el correo del usuario no se encuentre registrado 
         const emailInDb =  await buscarEmail( dataUsuarioNuevo.correo );
+        console.log( emailInDb );
         // Si el correo se encuentra dentro de la db mandar mensaje de error
-        if( emailInDb  ) {
+        if( emailInDb.length > 0  ) {
             return res.status( 403 ).send( { error: 'El correo ya se encuentra registrado' } );
         }
         // Si la matricula se encuentra registrada dentro de la DB mandar mensaje de error
@@ -79,8 +84,50 @@ const apiControllers = {
         res.status( 200 ).send( { temporalDataNewUser: temporalDataNewUser } );
     },
 
+    registrarUsuarioCodigoVerigicacion: async ( req, res ) => {
+        const { codigoVerificacion, dataTemporal } = req.body;
+        // DESCIFRAMOS LA DATA TEMPORAL
+        jwt.verify( dataTemporal, 'jswSecretFirma', async ( err, decoded ) => {
+            if( err ) {
+                return res.status( 403 ).send( { error: 'El lapso de tiempo de 3 minutos termino, reinicia el registro' } );
+            }
+
+            // Verificamos que el código de verificación enviado sea el mismo al almacenado en la data temporal
+            if( decoded.codigoVerificacion != codigoVerificacion ) {
+                return res.status( 403 ).send( { error: 'Código de verificación incorrecto' } );
+            }
+            // SI no hay error almacenamos en la DB al usuario
+            const id_aux = uuid();
+            await db.Usuario.create({
+                id: id_aux,
+                nombre: decoded.nombre,
+                apellidoPaterno: decoded.apellidoPaterno,
+                apellidoMaterno: decoded.apellidoMaterno,
+                correo: decoded.correo,
+                matricula: decoded.matricula,
+                password: bcryptjs.hashSync( decoded.nuevoPassword, 12 ),
+            });
+
+            // Verifiamos si el usuario es maestro o alumno y lo registramos en su respectiva tabla
+            if( decoded.tipoCuenta == 'maestro' ) {
+                await db.Maestro.create({
+                    id: uuid(),
+                    id_usuario: id_aux
+                });
+            } else if( decoded.tipoCuenta == 'alumno' ) {
+                await db.Alumno.create({
+                    id: uuid(),
+                    id_usuario: id_aux
+                });
+            }
+            // Enviamos la palabra OK para terminar el registro
+            res.send( 'OK' );
+        })
+    },
+
     userInfo: async ( req, res ) => {
         const idUsuario = req.userId;
+        // console.log( req );
         // Obtenemos la información del usuario actual a través de una Query a la DB
         // ->NO enviar enformación sensible
         const currentUser = await buscarUsuario( idUsuario );

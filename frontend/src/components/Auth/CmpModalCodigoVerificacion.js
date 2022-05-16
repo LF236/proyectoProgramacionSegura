@@ -4,6 +4,7 @@ import { Modal, Box, Typography, Backdrop, Fade, TextField, Button, Alert } from
 // import { Box } from '@mui/system';
 import React from 'react';
 import { validarCodigoVerificacionRegistro } from '../../helpers/validarEntradasFormularios';
+import { sendRegistroDataVerificada } from '../../helpers/UsersPetitions';
 
 const style = {
     modalContent: {
@@ -37,7 +38,20 @@ const CmpModalCodigoVerificacion = ({ bandShowModal, setOpenModal, dataRegistroT
         const listaErrores = validarCodigoVerificacionRegistro( inputForm );
         if( listaErrores.length == 0 ) {
             // Si no hay los errores mandamos los datos al endPoint
-            console.log( 'TODO OK' );
+            sendRegistroDataVerificada( localStorage.getItem( 'temporalDataNewUser' ), inputForm.codigoVerificacion )
+            .then( res => {
+                if( res.data == 'OK' ) {
+                    alert( 'CUENTA REGISTRADA' );
+                    return window.location = '/home';
+                }
+
+            } ).catch( err => {
+                setMensajeError( err.response.data.error );
+                setAlertError( true );
+                setTimeout(() => {
+                    setAlertError( false );
+                }, 2000)
+            } )
         }
         else {
             setMensajeError( listaErrores[ 0 ] );

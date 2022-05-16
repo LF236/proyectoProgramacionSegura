@@ -5,11 +5,18 @@ import { validarFormularioRegistro } from '../helpers/validarEntradasFormularios
 import { UserContext } from '../hooks/UserContext';
 import { sendRegistroData } from '../helpers/UsersPetitions';
 import CmpLoading from './CmpLoading';
+import CmpModalCodigoVerificacion from './Auth/CmpModalCodigoVerificacion';
 const CmpRegistro = () => {
     const [ form, setForm ] = useState( '' );
     const [ alertError, setAlertError ] = useState( false );
     const [ mensajeError, setMensajeError ] = useState( '' );
+    const [ openModal, setOpenModal ] = useState( false );
     const { user, isLoading } = useContext( UserContext );
+
+    const handleShowModal = () => {
+        setOpenModal( true );
+    }
+        
     const handleInputFormChange = ( e ) => {
         setForm({
             ...form,
@@ -36,6 +43,7 @@ const CmpRegistro = () => {
                     localStorage.setItem( 'temporalDataNewUser', temporalDataNewUser );
                     // Mostrar el modal para introducir el codigo de registro
                     console.log( temporalDataNewUser );
+                    handleShowModal();
                 }
                 else {
                     setMensajeError( 'Error en el servidor, notifique al administrador' );
@@ -78,6 +86,7 @@ const CmpRegistro = () => {
 
     return (
         <Container maxWidth='xs' component='main'>
+            <CmpModalCodigoVerificacion bandShowModal={ openModal } setOpenModal={ setOpenModal }/>
             <Fade in={ alertError }>
                 <Alert severity='error' 
                     style={ { width: "100%", position: 'fixed', left: '0', top: '64px', zIndex: '10' } }
