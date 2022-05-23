@@ -3,13 +3,22 @@ import { UserContext } from '../hooks/UserContext';
 import { Navigate } from 'react-router-dom';
 import { Grid, Paper, Box, Typography, Button, Link } from '@mui/material';
 import imgLogo from '../assets/img/demo.jpg';
+import CmpLoading from './CmpLoading';
+
 const CmpLanding = () => {
-    const { user } = useContext( UserContext );
+    const { user, isLoading } = useContext( UserContext );
+    
+
     // Si el usuario existe en el contexto redirigimos al home
+   
+    if( isLoading ) {
+        return <CmpLoading />
+    }
+
     if( user ) {
         return <Navigate to='/home/' />
     }
-
+    
     return (
         <div className='landing_page'>
             <Grid container component='main'>
@@ -62,6 +71,7 @@ const CmpLanding = () => {
             </Grid>
         </div>
     );
+    
 }
 
 export default CmpLanding;

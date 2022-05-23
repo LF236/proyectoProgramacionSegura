@@ -36,7 +36,7 @@ const buscarUsuario = ( id ) => {
         try {
             const user = await db.Usuario.findByPk( id, {
                 raw: true,
-                attributes: [ 'nombre', 'apellidoPaterno', 'apellidoMaterno', 'correo', 'matricula' ]
+                attributes: [ 'nombre', 'apellidoPaterno', 'apellidoMaterno', 'correo', 'matricula',  ]
             } );
             resolve( user );
         }
@@ -46,8 +46,25 @@ const buscarUsuario = ( id ) => {
     });
 }
 
+const buscarTipoCuenta = ( id ) => {
+    return new Promise( async ( resolve, reject ) => {
+        try {
+            const userMaestro = await db.Maestro.findOne( { raw: true, where: { id_usuario: id } } );
+            const userAlumno = await db.Alumno.findOne( { raw: true, where: { id_usuario: id } } );
+            if( userMaestro ) {
+                resolve( 'MAESTRO' );
+            } else if( userAlumno ) {
+                resolve( 'ALUMNO' );
+            }
+        }
+        catch {
+            reject( false );
+        }
+    });
+}
 module.exports = {
     buscarEmail,
     buscarUsuario,
-    buscarMatricula
+    buscarMatricula,
+    buscarTipoCuenta
 }

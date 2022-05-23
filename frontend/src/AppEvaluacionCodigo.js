@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, BrowserRouter as Router, useRoutes } from 'react-router-dom';
+import { Routes, Route, BrowserRouter as Router, useRoutes, Navigate, Outlet } from 'react-router-dom';
 import { UserContext } from './hooks/UserContext';
 import CmpLogin from './components/CmpLogin';
 import CmpRegistro from './components/CmpRegistro';
@@ -11,24 +11,43 @@ import useFindUser from './hooks/useFindUser';
 import CmpLanding from './components/CmpLanding';
 import CmpPrivateRoute from './components/CmpPrivateRoute';
 import CmpNotFound from './components/CmpNotFound';
+import CmpNuevoCurso from './components/Maestros/CmpNuevoCurso';
+import CmpMaestrosCursos from './components/Maestros/CmpMaestrosCursos';
 import CmpTest from './components/CmpTest';
-import CmpModalCodigoVerificacion from './components/Auth/CmpModalCodigoVerificacion';
+import CmpAlumnosCursos from './components/Alumnos/CmpAlumnosCursos';
+import CmpLoading from './components/CmpLoading';
 const AppEvaluacionCodigo = () => {
     const { user, setUser, isLoading } = useFindUser();
     const RouterList = () => {
         const routesArr = useRoutes([
             { path: '/', element: <CmpLanding /> },
-            // { path: '/home', element: <CmpHome /> },
             { path: '/login', element: <CmpLogin /> },
             { path:  '/registro', element: <CmpRegistro />},
-            { path: '/test', element: <CmpTest /> },
             { path: '/home', element: <CmpPrivateRoute component={ CmpHome } />, index: true },
+            { path: '/test', element: <CmpNuevoCurso /> },
+            // Rutas para maestros
+            {
+                path: '/maestros',
+                element: user && user.tipo == 'MAESTRO' ? <Outlet /> : <Navigate to='/home'/> ,
+                children: [
+                    { path: '' , element: <CmpMaestrosCursos /> },
+                    { path: 'crearCurso', element: <CmpNuevoCurso /> }
+                ]
+                
+            },
+            // Rutas para alumnos 
+            {
+                path: '/alumnos',
+                element: user && user.tipo == 'ALUMNO' ? <CmpAlumnosCursos /> : <Navigate to='/home'/>
+            },
             { path: '*', element: <CmpNotFound /> }
-            // { path: '/home', element:  }
         ]);
         return routesArr;
     } 
-
+    if( isLoading ) {
+        return <CmpLoading />
+    }
+    else {
     return (
         <>
             <CmpHeader userInfo={ user } />
@@ -36,12 +55,13 @@ const AppEvaluacionCodigo = () => {
                 <UserContext.Provider value={ { user, setUser, isLoading } }>
                     <Router styles={ { backgroundColor: 'red' } }>
                         <RouterList/>
-                    </Router>
+                    </Router>                    
                 </UserContext.Provider>
             </main>
             <CmpFooter />
         </>
     );
+    }
 }
 
 export default AppEvaluacionCodigo;

@@ -2,36 +2,21 @@ import React, { useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from '../hooks/UserContext';
 import { authHeader } from '../services/authHeader';
+import { Navigate } from 'react-router-dom';
+import CmpLoading from './CmpLoading';
 
 const CmpHome = () => {
     const { user, isLoading } = useContext( UserContext );
-    const getInfo = () => {
-        console.log( 'HELLO WORLD' );
-        const URI = `http://${ process.env.REACT_APP_IP_API }:8000/api/test`;
-        axios.get( URI, { headers: authHeader() } )
-            .then( res => {
-                console.log( res );
-            } )
+    if( isLoading ) {
+        return <CmpLoading />
     }
-
-    const globalVars = () => {
-        const URI = `http://${ process.env.REACT_APP_IP_API }:8000/api/user`;
-        axios.get( URI, { headers: authHeader() } )
-            .then( res => {
-                console.log( res );
-            } )
-            .catch( err => {
-                console.log( 'Error alv' );
-                console.log( err );
-            } )
+    console.log( 'VA PAL HOME' );
+    if( user.tipo == 'MAESTRO' ) {
+        return <Navigate to='/maestros' />
+    } else if( user.tipo == 'ALUMNO' ) {
+        return <Navigate to='/alumnos' />
     }
-
-    return (
-        <>
-            <div>CmpHome</div>
-            <button onClick={ globalVars }>GetInfoSession</button>
-        </>
-    );
+   
 }
 
 export default CmpHome;

@@ -139,7 +139,7 @@ const LoginComponent = () => {
                                 </Grid>
 
                                 <Grid item>
-                                    <Link variant='body2' href='#'>
+                                    <Link variant='body2' href='/registro'>
                                         { '¿No tienes una cuenta? Registrate' }
                                     </Link>
                                 </Grid>

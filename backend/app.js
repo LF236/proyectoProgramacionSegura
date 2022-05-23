@@ -15,7 +15,9 @@ app.use( cors() );
 // Config file of routes
 const apiRoutes = require( './routes/apiRoutes' );
 app.use( '/api', apiRoutes );
-
+// Config files of routes teachers
+const apiRoutesMaestros = require( './routes/apiRoutesMaestros' );
+app.use( '/api/maestros', apiRoutesMaestros );
 // Listening to server
 app.listen( port, () => {
     console.log( `Server is ready in http://localhost:${ port }`.rainbow );

@@ -2,7 +2,7 @@ const db = require( '../database/models' );
 const bcryptjs = require( 'bcryptjs' );
 const jwt = require( 'jsonwebtoken' );
 const { v4: uuid } = require( 'uuid' );
-const { buscarEmail, buscarUsuario, buscarMatricula } = require('../helpers/consultasUsuarios');
+const { buscarEmail, buscarUsuario, buscarMatricula, buscarTipoCuenta } = require('../helpers/consultasUsuarios');
 const { sendVerificationCode, generateVerificationCode } = require('../helpers/apiCorreo');
 const apiControllers = {
     home: ( req, res ) => {
@@ -131,9 +131,12 @@ const apiControllers = {
         // Obtenemos la información del usuario actual a través de una Query a la DB
         // ->NO enviar enformación sensible
         const currentUser = await buscarUsuario( idUsuario );
+        // Verificar el tipo de cuenta
+        const tipoCuenta = await buscarTipoCuenta( idUsuario );
+        currentUser[ 'tipo' ] = tipoCuenta;
         res.send({
             auth: true,
-            currentUser
+            currentUser,
         });
     },
 
