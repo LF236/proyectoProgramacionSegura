@@ -17,6 +17,7 @@ import CmpTest from './components/CmpTest';
 import CmpAlumnosCursos from './components/Alumnos/CmpAlumnosCursos';
 import CmpLoading from './components/CmpLoading';
 import CmpCurso from './components/Maestros/CmpCurso';
+import CmpEditarCurso from './components/Maestros/CmpEditarCurso';
 
 const AppEvaluacionCodigo = () => {
     const { user, setUser, isLoading } = useFindUser();
@@ -26,7 +27,7 @@ const AppEvaluacionCodigo = () => {
             { path: '/login', element: <CmpLogin /> },
             { path:  '/registro', element: <CmpRegistro />},
             { path: '/home', element: <CmpPrivateRoute component={ CmpHome } />, index: true },
-            { path: '/test', element: <CmpCurso /> },
+            { path: '/test', element: <CmpEditarCurso /> },
             // Rutas para maestros
             {
                 path: '/maestros',
