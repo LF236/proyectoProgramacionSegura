@@ -1,18 +1,24 @@
-import { CssBaseline, Toolbar, Typography, Box, Container, Stack, Button, Grid, CardMedia, Card, CardContent, CardActions } from '@mui/material';
+import { CssBaseline, Toolbar, Typography, Box, Container, Stack, Button, Grid, CardMedia, Card, CardContent, CardActions, Link, Avatar } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { getCursosMaestros } from '../../services/maestrosServices';
-
+import imgCurso from '../../assets/img/curso.jpg';
+import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
+import { formatDate } from '../../helpers/Cursos/formatDate';
 const CmpMaestrosCursos = () => {
     const theme = createTheme();
-    const cursos = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    const test = () => {
+    const [ cursos, setCursos ] = useState( [] );
+    useEffect(() => {
+        console.log( 'Actualizando cursos' );
         getCursosMaestros().then( res => {
-            console.log( res );
+            setCursos( res.data.listaCursos );
         } )
-        
-    }
+        .catch( () => {
+            setCursos( [] );
+        } )
+    }, []);
 
+    
     return (
         <>
             <ThemeProvider theme={ theme }>
@@ -43,12 +49,27 @@ const CmpMaestrosCursos = () => {
                                 spacing={ 2 }
                                 justifyContent='start'
                             >
-                                <Button variant='contained'>Agregar Curso</Button>
-                                <Button variant='outlined' onClick={ test }>Editar Curso</Button>
+                                <Button variant='contained'>
+                                    <Link href='/maestros/crearCurso' color='inherit' underline='none'>Agregar Curso</Link>
+                                </Button>
+                                <Button variant='outlined'>Editar Curso</Button>
                             </Stack>
                         </Container>
                     </Box>
-
+                    { cursos.length == 0 &&
+                        <Container sx={ { py: 1 } } maxWidth='md'>
+                            <Grid container justifyContent='flex-start' alignItems='center'>
+                                <Avatar sx={ { m: 1, bgcolor: 'warning.main' } }>
+                                    <SentimentVeryDissatisfiedIcon />
+                                </Avatar>
+                                
+                                <Typography variant='subtitle1'>
+                                    No tienes cursos registrados, agrega uno.
+                                </Typography>
+                            </Grid>
+                        </Container>
+                        
+                    }
                     <Container sx={ { py: 1 } } maxWidth='md'>
                         <Grid container spacing={ 4 }>
                             { cursos.map( curso => (
@@ -67,16 +88,19 @@ const CmpMaestrosCursos = () => {
                                             sx={{
                                                 
                                             }}
-                                            image='https://source.unsplash.com/random'
+                                            image={ imgCurso }
                                             alt={ curso }
                                         />
                                         <CardContent sx={ { flexGrow: 1 } }>
                                             <Typography gutterBottom variant='h5' component='h2'>
-                                                Heading
+                                                { curso.nombre }
                                             </Typography>
                                             
                                             <Typography>
-                                                Created at: 10/05/22
+                                                Fecha de creación: { formatDate( curso.createdAt ) }
+                                            </Typography>
+                                            <Typography variant='caption'>
+                                                NRC: { curso.nrc }
                                             </Typography>
                                         </CardContent>
                                         <CardActions>

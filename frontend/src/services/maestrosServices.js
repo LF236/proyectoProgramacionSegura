@@ -18,3 +18,24 @@ export const getCursosMaestros = () => {
         }
     } );
 }
+
+export const guardarCursoMaestros = ( data ) => {
+    return new Promise( ( resolve, reject ) => {
+        try {
+            const URI = `http://${ process.env.REACT_APP_IP_API }:8000/api/maestros/guardarCurso`;
+            axios({
+                method: 'POST',
+                headers: authHeader(),
+                url: URI,
+                data
+            }).then( res => {
+                resolve( res );
+            } ).catch( err => {
+                reject( err );
+            } )
+        }
+        catch{
+            reject( false );
+        }
+    } );
+}

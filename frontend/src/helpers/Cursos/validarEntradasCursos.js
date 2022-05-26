@@ -3,6 +3,6 @@ export const validarCrearNuevoCurso = ( data ) => {
     if( data.length == 0 ) listaErrores.push( 'Error al ingresar datos' );
     if( data.nombre == undefined || data.nombre.length <= 4 ) listaErrores.push( 'Ingresa un nombre más largo' );
     if( data.descripcion == undefined || data.descripcion.length <= 10 ) listaErrores.push( 'Ingresa una descripción más grande' );
-    if( data.nfc == undefined || data.nfc < 8 ) listaErrores.push( 'Genera un NFC' );
+    if( data.nrc == undefined || data.nfc < 5 ) listaErrores.push( 'Genera un NRC' );
     return listaErrores;
 }
