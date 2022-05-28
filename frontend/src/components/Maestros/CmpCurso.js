@@ -16,16 +16,9 @@ const CmpCurso = () => {
                     pb: 6
                 }}
             >
-                <Container>
-                    <Typography className='curso-component-title' variant='h4' component='h1'>
-                        Progamación Segura
-                    </Typography>
-                    <Typography variant='caption'>
-                        NRC: 233213
-                    </Typography>
-                    <Typography sx={ { pt: 2 } } >
-                        Dolor qui aliquip id labore sit cupidatat. Non ea exercitation Lorem amet nisi exercitation eiusmod in ullamco do labore. Qui culpa eu irure dolor sint sunt quis ea duis. Dolore laborum qui incididunt duis Lorem proident. Quis incididunt qui occaecat anim. Irure officia labore cillum reprehenderit. Ipsum ex officia ad culpa sunt velit elit aliqua.
-                    </Typography>
+                <Container maxWidth='md'>
+                    
+
                     <Stack
                         sx={{ pt: 2 }}
                         direction='row'
