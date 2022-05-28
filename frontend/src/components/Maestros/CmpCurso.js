@@ -12,9 +12,7 @@ const CmpCurso = () => {
                 }}
             >
                 <Container maxWidth='md'>
-                    <Typography className='curso-component-title' variant='h4' component='h1'>
-                        Progamación Segura
-                    </Typography>
+                    
 
                     <Stack
                         sx={{ pt: 2, display: 'flex', flexDirection: 'column' }}
