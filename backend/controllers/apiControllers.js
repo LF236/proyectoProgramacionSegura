@@ -31,7 +31,7 @@ const apiControllers = {
                         },
                         'jswSecretFirma',
                         {
-                           expiresIn: 300 
+                           expiresIn: 900 
                         }
                     );
                     return res.send( {

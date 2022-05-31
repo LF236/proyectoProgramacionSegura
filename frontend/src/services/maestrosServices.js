@@ -39,3 +39,39 @@ export const guardarCursoMaestros = ( data ) => {
         }
     } );
 }
+
+export const getInfoCurso = ( id_curso ) => {
+    return new Promise( ( resolve, reject ) => {
+        try {
+            const URI = `http://${ process.env.REACT_APP_IP_API }:8000/api/maestros/infoCurso`;
+            axios.get( URI, { headers: authHeader(), params: { id_curso } } )
+            .then( res => {
+                resolve( res.data );
+            } )
+            .catch( err => {
+                reject( false );
+            } )
+        }
+        catch( err ) {
+            resolve( false );
+        }
+    } );
+}
+
+export const getAlumnosNoInscritos = () => {
+    return new Promise( ( resolve, reject ) => {
+        try {
+            const URI = `http://${ process.env.REACT_APP_IP_API }:8000/api/maestros/listaAlumnosFueraCurso`;
+            axios.get( URI, { headers: authHeader() } )
+            .then( res => {
+                resolve( res.data );
+            } )
+            .catch( err =>{
+                reject( false );
+            }) 
+        }
+        catch {
+            reject( false );
+        }
+    } )
+}

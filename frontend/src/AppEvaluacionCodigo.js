@@ -34,7 +34,8 @@ const AppEvaluacionCodigo = () => {
                 element: user && user.tipo == 'MAESTRO' ? <Outlet /> : <Navigate to='/home'/> ,
                 children: [
                     { path: '' , element: <CmpMaestrosCursos /> },
-                    { path: 'crearCurso', element: <CmpNuevoCurso /> }
+                    { path: 'crearCurso', element: <CmpNuevoCurso /> },
+                    { path: 'editarCurso', element: <CmpEditarCurso /> }
                 ]
                 
             },

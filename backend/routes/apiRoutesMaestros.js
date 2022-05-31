@@ -5,5 +5,6 @@ const router = express.Router();
 
 router.get( '/listaCursos', verifyJwt, apiControllersMaestros.getListaCursos );
 router.post( '/guardarCurso', verifyJwt, apiControllersMaestros.storageCurso );
-
+router.get( '/listaAlumnosFueraCurso', verifyJwt ,apiControllersMaestros.getListaAlumnosFueraDelCursos );
+router.get( '/infoCurso', verifyJwt, apiControllersMaestros.getInfoCurso );
 module.exports = router;

@@ -1,9 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Box, Avatar, Typography, Grid, TextField, Autocomplete } from '@mui/material';
 import AddBoxIcon from '@mui/icons-material/AddBox';
-import top100Films from '../../assets/data/movies';
+import { getAlumnosNoInscritos } from '../../services/maestrosServices';
+import { useSearchParams } from 'react-router-dom';
+import { getInfoCurso } from '../../services/maestrosServices';
 
 const CmpEditarCurso = () => {
+    const [ listaAlumnosNoInscritos, setListaAlumnosNoInscritos ] = useState( [] );
+    const [ infoCursoActual, setInfoCursoActual ] = useState( {} );
+    const [ form, setForm ] = useState( [] );
+    const [ searchParams ] = useSearchParams();
+    
+    useEffect(async () => {
+        // Obtenemos el id del curso enviado en los query params
+        const id_curso = searchParams.get( 'id_curso' );
+        setForm( await getInfoCurso( id_curso ) );
+        setListaAlumnosNoInscritos( await getAlumnosNoInscritos() );
+        
+    }, []);
+
+    const handleInputFormChange = ( e ) => {
+        setForm({
+            ...form,
+            [ e.target.name ]: e.target.value
+        })
+    }
+    // Estados de las entradas de formularios
+    const [ nuevaListaAlumnos, setNuevaListaAlumnos ] = useState( [] );
+    const [ inputValue, setInputValue ] = useState( '' );
+
     return(
         <>
             <Container maxWidth='xs' component='main'>
@@ -14,6 +39,7 @@ const CmpEditarCurso = () => {
                         alignItems: 'center',
                     }}
                 >
+                    
                     <Avatar sx={ { m: 1, bgcolor: 'secondary.main' } }>
                         <AddBoxIcon />
                     </Avatar>
@@ -28,10 +54,13 @@ const CmpEditarCurso = () => {
                                     name='nombre'
                                     id='nombre'
                                     required
-                                    fullWidth
-                                    autoFocus
+                                    fullWidth                                    
                                     label='Nombre'
                                     autoComplete='given-name'
+                                    variant="outlined"
+                                    onChange={ handleInputFormChange }
+                                    value={ form.nombre }
+                                    InputLabelProps={{ shrink: true }}
                                 />
                             </Grid>
                             <Grid item xs={ 12 } sm={ 12 }>
@@ -40,9 +69,13 @@ const CmpEditarCurso = () => {
                                     required
                                     fullWidth
                                     multiline
+                                    autoFocus
                                     rows={ 3 }
                                     label='Descripcion'
                                     name='descripcion'
+                                    value={ form.descripcion }
+                                    onChange={ handleInputFormChange }
+                                    InputLabelProps={{ shrink: true }}
                                 />
                             </Grid>
                             <Grid item xs={ 12 } sm={ 12 }>
@@ -52,22 +85,36 @@ const CmpEditarCurso = () => {
                                     label='NRC'
                                     name='nrc'
                                     disabled
+                                    value={ form.nrc }
+                                    InputLabelProps={{ shrink: true }}
                                 />
                             </Grid>
-                            <Autocomplete 
-                                multiple
-                                id='alumnos'
-                                options={ top100Films }
-                                getOptionLabel={ ( option ) => option.title }
-                                filterSelectedOptions
-                                renderInput={ ( params ) => (
-                                    <TextField
-                                        { ...params }
-                                        
-                                    />
-                                ) }
-                            />
-                                
+                            <Grid item xs={ 12 } sm={ 12 }>
+                                <Autocomplete 
+                                    value={ nuevaListaAlumnos }
+                                    onChange={ ( e, newValue ) => { 
+                                        setNuevaListaAlumnos( newValue ) 
+                                       
+                                    } }
+                                    inputValue={ inputValue }
+                                    onInputChange={ ( e, newInputValue ) => {
+                                        setInputValue( newInputValue );
+                                    } }
+                                    multiple
+                                    id='alumnos'
+                                    options={ listaAlumnosNoInscritos }
+                                    getOptionLabel={ ( option ) => option.matricula }
+                                    filterSelectedOptions
+                                    fullWidth
+                                    renderInput={ ( params ) => (
+                                        <TextField
+                                            { ...params }
+                                            label='Selecciona alumnos por matricula'
+                                            placeholder='Lista de Alumnos'                                        
+                                        />
+                                    ) }
+                                />
+                            </Grid>    
                         </Grid>
                     </Box>
                 </Box>

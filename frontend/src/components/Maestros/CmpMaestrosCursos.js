@@ -105,7 +105,7 @@ const CmpMaestrosCursos = () => {
                                         </CardContent>
                                         <CardActions>
                                             <Button size='small'>Ver</Button>
-                                            <Button size='small'>Edit</Button>
+                                            <Button size='small'><Link underline='none' href={ `maestros/editarCurso?id_curso=${ curso.id }` }>Editar</Link></Button>
                                         </CardActions>                
                                     </Card>                                    
                                 </Grid>

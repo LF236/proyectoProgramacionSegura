@@ -35,5 +35,14 @@ module.exports = ( sequelize, DataTypes ) => {
     }
 
     const Alumno = sequelize.define( 'Alumno', cols, config );
+    // Alumno.associate = modelos => {
+    //     Alumno.hasOne( modelos.Usuario, {
+    //         as: 'alumno_usuario',
+    //         foreignKey: {
+    //             allowNull: false,
+    //             name: 'id'
+    //         }
+    //     } );
+    // }
     return Alumno;
 }

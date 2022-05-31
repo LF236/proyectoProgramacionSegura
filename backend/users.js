@@ -29,17 +29,17 @@ const db = require( './database/models' );
 const insertAlumnosData = () => {
     try {
         // Leer la lista de alumnos
-        const listaAlumnos = JSON.parse( fs.readFileSync( path.resolve( __dirname, './database/seeders/usuarios.json' ), 'utf-8' ) );
+        const listaUsuarios = JSON.parse( fs.readFileSync( path.resolve( __dirname, './database/seeders/usuarios.json' ), 'utf-8' ) );
         // Leer lista de maestros
-        const lista = JSON.parse( fs.readFileSync( path.resolve( __dirname, './database/seeders/alumnos.json' ), 'utf-8' ) );
+        const listaAlumnos = JSON.parse( fs.readFileSync( path.resolve( __dirname, './database/seeders/alumnos.json' ), 'utf-8' ) );
         
         // Inyectamos la data
-        // const promiseListaAlumnos = listaAlumnos.map( alumno => {
-        //     return db.Usuario.create( alumno );
+        // const promiseListaUsuario = listaUsuarios.map( usuario => {
+        //     return db.Usuario.create( usuario );
         // } );
 
 
-        const promiseLista = lista.map( alumno => {
+        const promiseListaAlumnos = listaAlumnos.map( alumno => {
             return db.Alumno.create( alumno );
         } );
 
@@ -51,4 +51,4 @@ const insertAlumnosData = () => {
 }
 
 insertAlumnosData()
-console.log( process.env.DB_NAME );
+// console.log( process.env.DB_NAME );

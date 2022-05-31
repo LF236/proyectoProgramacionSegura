@@ -48,8 +48,44 @@ const storageCursoDB = ( id_maestro, data ) => {
         }
     } );
 }
+
+const listaAlumnos = () => {
+    return new Promise(  async ( resolve, reject ) => {
+        try {
+            let listaUsuarios = await db.Usuario.findAll({
+                raw: true,
+                include: [ 'alumno_usuario' ]
+            });
+            listaUsuarios = listaUsuarios.filter( user => user[ 'alumno_usuario.id' ] != null );
+            resolve( listaUsuarios );
+        }
+        catch(err) {
+            console.log( err );
+            reject( false );
+        }
+    });
+}
+
+const obtenerInfoCurso = ( id_curso ) => {
+    return new Promise( async ( resolve, reject ) => {
+        try {
+            let cursoInfo = await db.Curso.findByPk( id_curso, {
+                raw: true,
+                attributes: [ 'descripcion', 'nombre', 'nrc' ]
+
+            } );
+            resolve( cursoInfo );
+        }
+        catch( err  ){
+            reject( false );
+        }
+    })
+}
+
 module.exports = {
     obtenerListaDeCursos,
     obtenerIdMaestro,
-    storageCursoDB
+    storageCursoDB,
+    listaAlumnos,
+    obtenerInfoCurso
 }
