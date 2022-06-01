@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Box, Avatar, Typography, Grid, TextField, Autocomplete } from '@mui/material';
 import AddBoxIcon from '@mui/icons-material/AddBox';
-import { getAlumnosNoInscritos } from '../../services/maestrosServices';
+import { getAlumnosInscritos, getAlumnosNoInscritos } from '../../services/maestrosServices';
 import { useSearchParams } from 'react-router-dom';
 import { getInfoCurso } from '../../services/maestrosServices';
+import CmpTablaAlumnosInscritos from './CmpTablaAlumnosInscritos';
+
 
 const CmpEditarCurso = () => {
     const [ listaAlumnosNoInscritos, setListaAlumnosNoInscritos ] = useState( [] );
     const [ infoCursoActual, setInfoCursoActual ] = useState( {} );
-    const [ form, setForm ] = useState( [] );
+    const [ form, setForm ] = useState( { nombre: '', nrc: '', descripcion: '' } );
     const [ searchParams ] = useSearchParams();
-    
+    const [ listaAlumnosInscritos, setListaAlumnosInscritos ] = useState( [] );
     useEffect(async () => {
         // Obtenemos el id del curso enviado en los query params
         const id_curso = searchParams.get( 'id_curso' );
         setForm( await getInfoCurso( id_curso ) );
         setListaAlumnosNoInscritos( await getAlumnosNoInscritos() );
-        
+        setListaAlumnosInscritos( await getAlumnosInscritos( id_curso ) );
     }, []);
 
     const handleInputFormChange = ( e ) => {
@@ -117,6 +119,24 @@ const CmpEditarCurso = () => {
                             </Grid>    
                         </Grid>
                     </Box>
+                </Box>
+
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Box sx={ { m: 1 } }>
+                        <Grid container spacing={ 2 }>
+                        <Grid item xs={ 12 } sm={ 12 }>
+                            <CmpTablaAlumnosInscritos listaAlumnos={ listaAlumnosInscritos }/>
+                            </Grid>
+                        </Grid>
+                        
+                    </Box>
+                    
                 </Box>
             </Container>
         </>

@@ -75,3 +75,23 @@ export const getAlumnosNoInscritos = () => {
         }
     } )
 }
+
+export const getAlumnosInscritos = ( id_curso ) => {
+    return new Promise( ( resolve, reject )  => {
+        try {
+            const URI = `http://${ process.env.REACT_APP_IP_API }:8000/api/maestros/listaAlumnosInscritos`;
+            axios.get( URI, { headers: authHeader(), params: { id_curso } } )
+            .then( res => {
+                console.log( res );
+                resolve( res.data );
+            } )
+            .catch( err => {
+                reject( false );
+            } )
+        }
+        catch( err ) {
+            console.log( err );
+            reject( false );
+        }
+    })
+}

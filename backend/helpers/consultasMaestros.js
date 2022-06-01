@@ -82,10 +82,27 @@ const obtenerInfoCurso = ( id_curso ) => {
     })
 }
 
+const listaAlumnosInscritos = ( id_curso ) => {
+    return new Promise( async ( resolve, reject ) => {
+        try {
+            let listaAlumnosInscritos = await db.ListaAlumnos.findAll({
+                raw: true,
+                where: { id_curso: id_curso }
+            });
+            resolve( listaAlumnosInscritos );
+        }
+        catch( err ){
+            console.log( err );
+            reject( false );
+        }
+    } );
+}
+
 module.exports = {
     obtenerListaDeCursos,
     obtenerIdMaestro,
     storageCursoDB,
     listaAlumnos,
-    obtenerInfoCurso
+    obtenerInfoCurso,
+    listaAlumnosInscritos
 }

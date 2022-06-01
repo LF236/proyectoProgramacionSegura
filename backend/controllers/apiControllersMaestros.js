@@ -1,4 +1,4 @@
-const { obtenerListaDeCursos, obtenerIdMaestro, storageCursoDB, listaAlumnos, obtenerInfoCurso } = require("../helpers/consultasMaestros");
+const { obtenerListaDeCursos, obtenerIdMaestro, storageCursoDB, listaAlumnos, obtenerInfoCurso, listaAlumnosInscritos } = require("../helpers/consultasMaestros");
 
 const apiControllersMaestros = {
     getListaCursos: async ( req, res ) => {
@@ -47,6 +47,16 @@ const apiControllersMaestros = {
         }
         catch( err ) {
             console.log( err );
+        }
+    },
+
+    getListaAlumnosInscritos: async ( req, res ) => {
+        try {
+            const listaAlumnos = await listaAlumnosInscritos( req.query.id_curso );
+            res.send( listaAlumnos );
+        }
+        catch( err ) {
+            return res.send( false );
         }
     }
 }

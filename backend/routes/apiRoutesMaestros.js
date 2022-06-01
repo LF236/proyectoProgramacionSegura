@@ -7,4 +7,5 @@ router.get( '/listaCursos', verifyJwt, apiControllersMaestros.getListaCursos );
 router.post( '/guardarCurso', verifyJwt, apiControllersMaestros.storageCurso );
 router.get( '/listaAlumnosFueraCurso', verifyJwt ,apiControllersMaestros.getListaAlumnosFueraDelCursos );
 router.get( '/infoCurso', verifyJwt, apiControllersMaestros.getInfoCurso );
+router.get( '/listaAlumnosInscritos', apiControllersMaestros.getListaAlumnosInscritos );
 module.exports = router;
