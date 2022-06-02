@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Box, Avatar, Typography, Grid, TextField, Autocomplete } from '@mui/material';
+import { Container, Box, Avatar, Typography, Grid, TextField, Autocomplete, Button } from '@mui/material';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { getAlumnosInscritos, getAlumnosNoInscritos } from '../../services/maestrosServices';
 import { useSearchParams } from 'react-router-dom';
 import { getInfoCurso } from '../../services/maestrosServices';
 import CmpTablaAlumnosInscritos from './CmpTablaAlumnosInscritos';
+import { validarUpdateCurso } from '../../helpers/Cursos/validarEntradasCursos';
 
 
 const CmpEditarCurso = () => {
@@ -26,6 +27,12 @@ const CmpEditarCurso = () => {
             ...form,
             [ e.target.name ]: e.target.value
         })
+    }
+
+    const handleUpdateCurso = ( e ) => {
+        e.preventDefault();
+        const listaErrores = validarUpdateCurso( form );
+        console.log( listaErrores );
     }
     // Estados de las entradas de formularios
     const [ nuevaListaAlumnos, setNuevaListaAlumnos ] = useState( [] );
@@ -118,6 +125,16 @@ const CmpEditarCurso = () => {
                                 />
                             </Grid>    
                         </Grid>
+                        <Button
+                            type='submit'
+                            fullWidth
+                            variant='contained'
+                            sx={ { mt: 3, mb: 2 } }
+                            color='secondary'
+                            onClick={ handleUpdateCurso }
+                        >
+                            Actualizar Datos
+                        </Button>
                     </Box>
                 </Box>
 
@@ -130,8 +147,8 @@ const CmpEditarCurso = () => {
                 >
                     <Box sx={ { m: 1 } }>
                         <Grid container spacing={ 2 }>
-                        <Grid item xs={ 12 } sm={ 12 }>
-                            <CmpTablaAlumnosInscritos listaAlumnos={ listaAlumnosInscritos }/>
+                            <Grid item xs={ 12 } sm={ 12 }>
+                                <CmpTablaAlumnosInscritos listaAlumnos={ listaAlumnosInscritos }/>
                             </Grid>
                         </Grid>
                         

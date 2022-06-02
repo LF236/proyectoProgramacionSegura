@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Typography, Grid, Avatar } from '@mui/material';
 import { Paper } from '@mui/material';
@@ -9,23 +9,12 @@ const CmpTablaAlumnosInscritos = ({ listaAlumnos }) => {
     useEffect(() => {
         console.log( listaAlumnos );
         console.log( listaAlumnos.length );
-        if( listaAlumnos.length == 0 ) {
-            alert( 'NO HAY NADIE' );
-        }
+        
     }, [])
-    const rowsExample = [
-        { name: 'Frozen yoghurt', matricula: 'S18014081' },
-        { name: 'Frozen yoghurt', matricula: 'S18014082' },
-        { name: 'Frozen yoghurt', matricula: 'S18014083' },
-        { name: 'Frozen yoghurt', matricula: 'S18014084' },
-        { name: 'Frozen yoghurt', matricula: 'S18014085' },
-        { name: 'Frozen yoghurt', matricula: 'S18014086' },
-
-    ];
 
     return (
         <>
-            {listaAlumnos.length == 0 &&
+            {listaAlumnos.length <= 0 &&
                 <Container sx={{ py: 1 }} maxWidth='md'>
                     <Grid container justifyContent='flex-start' alignItems='center'>
                         <Avatar sx={{ m: 1, bgcolor: 'warning.main' }}>
@@ -65,7 +54,7 @@ const CmpTablaAlumnosInscritos = ({ listaAlumnos }) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rowsExample.map(row => (
+                        {listaAlumnos.map(row => (
                             <TableRow
                                 key={row.matricula}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

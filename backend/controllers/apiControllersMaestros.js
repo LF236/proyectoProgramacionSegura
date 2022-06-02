@@ -58,6 +58,10 @@ const apiControllersMaestros = {
         catch( err ) {
             return res.send( false );
         }
+    },
+
+    updateCurso: ( req, res ) => {
+        res.send( 'HOLI' );
     }
 }
 

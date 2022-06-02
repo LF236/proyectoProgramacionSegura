@@ -95,3 +95,7 @@ export const getAlumnosInscritos = ( id_curso ) => {
         }
     })
 }
+
+export const updateCurso = ( data ) => {
+    
+}

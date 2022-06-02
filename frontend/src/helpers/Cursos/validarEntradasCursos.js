@@ -6,3 +6,8 @@ export const validarCrearNuevoCurso = ( data ) => {
     if( data.nrc == undefined || data.nfc < 5 ) listaErrores.push( 'Genera un NRC' );
     return listaErrores;
 }
+
+export const validarUpdateCurso = ( data ) => {
+    let listaErrores = [];
+    console.log( data );
+}
