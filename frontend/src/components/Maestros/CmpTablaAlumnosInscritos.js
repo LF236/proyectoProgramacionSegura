@@ -62,7 +62,7 @@ const CmpTablaAlumnosInscritos = ({ listaAlumnos }) => {
                                 <TableCell component='th' scope='row'>
                                     {row.matricula}
                                 </TableCell>
-                                <TableCell aling='right'>{row.name}</TableCell>
+                                <TableCell aling='right'>{`${ row.nombre } ${ row.apellidoPaterno } ${ row.apellidoMaterno }`}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

@@ -9,5 +9,8 @@ export const validarCrearNuevoCurso = ( data ) => {
 
 export const validarUpdateCurso = ( data ) => {
     let listaErrores = [];
-    console.log( data );
+    if( data.length == 0 ) listaErrores.push( 'Error al ingresar datos' );
+    if( data.nombre == undefined || data.nombre.length <= 4 ) listaErrores.push( 'Ingresa un nombre más largo' );
+    if( data.descripcion == undefined || data.descripcion.length <= 10 ) listaErrores.push( 'Ingresa una descripción más grande' );
+    return listaErrores;
 }

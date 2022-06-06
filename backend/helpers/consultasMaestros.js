@@ -66,6 +66,51 @@ const listaAlumnos = () => {
     });
 }
 
+const updateCursoDb = ( id_curso, data ) => {
+    return new Promise( async ( resolve, reject ) => {
+        try {
+            console.log( data );
+            await db.Curso.update(
+                data,
+                { where: { id: id_curso } },
+            );
+            resolve( true );
+        }
+        catch( err ) {
+            reject( err );
+        }
+    } );
+}
+
+const inscribirAlumnos = ( id_curso, arrIdsListaAlumnos ) => {
+    return new Promise( ( resolve, reject ) => {
+        try {
+            console.log( arrIdsListaAlumnos );
+            const arr_promesas_inscribir_alumnos = [];
+            arrIdsListaAlumnos.map( id_alumno => {
+                arr_promesas_inscribir_alumnos.push(
+                    db.ListaAlumnos.create({
+                        id: uuid(),
+                        id_curso: id_curso,
+                        id_alumno:  id_alumno
+                    })
+                );
+            } )
+            Promise.all( arrIdsListaAlumnos )
+            .then( res => {
+                resolve( true );
+            } )
+            .catch(err => {
+                console.log( err );
+            })
+            
+        }
+        catch( err ) {
+            reject( false );
+        }
+    } )
+}
+
 const obtenerInfoCurso = ( id_curso ) => {
     return new Promise( async ( resolve, reject ) => {
         try {
@@ -85,11 +130,29 @@ const obtenerInfoCurso = ( id_curso ) => {
 const listaAlumnosInscritos = ( id_curso ) => {
     return new Promise( async ( resolve, reject ) => {
         try {
-            let listaAlumnosInscritos = await db.ListaAlumnos.findAll({
+            let listaAlumnosInscritos = await db.Alumno.findAll({
                 raw: true,
-                where: { id_curso: id_curso }
+                where: { '$alumnos_inscritos.ListaAlumnos.id_curso$' : id_curso },
+                include: [ 'alumnos_inscritos' ],
+                attributes: [ 'id_usuario' ]
+                // where: { 'alumnos_inscritos.ListaAlumnos.id_curso': id_curso }
             });
-            resolve( listaAlumnosInscritos );
+            let arrPromesasBuscarInfoUsuario = [];
+            listaAlumnosInscritos.forEach( alumno => {
+                arrPromesasBuscarInfoUsuario.push(
+                    db.Usuario.findOne({
+                        where: {
+                            id: alumno.id_usuario
+                        },
+                        raw: true
+                    })
+                )
+            } );
+            Promise.all( arrPromesasBuscarInfoUsuario )
+            .then( res => {
+                resolve( res );
+            } )
+            
         }
         catch( err ){
             console.log( err );
@@ -104,5 +167,7 @@ module.exports = {
     storageCursoDB,
     listaAlumnos,
     obtenerInfoCurso,
-    listaAlumnosInscritos
+    listaAlumnosInscritos,
+    updateCursoDb,
+    inscribirAlumnos
 }

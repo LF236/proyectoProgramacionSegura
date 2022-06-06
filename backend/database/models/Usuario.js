@@ -58,7 +58,6 @@ module.exports = ( sequelize, DataTypes ) => {
     Usuario.associate = modelos => {
         Usuario.hasOne( modelos.Alumno, {
             as: 'alumno_usuario',
-
             foreignKey: {
                 name: 'id_usuario',
                 allowNull: false

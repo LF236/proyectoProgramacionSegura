@@ -96,6 +96,44 @@ export const getAlumnosInscritos = ( id_curso ) => {
     })
 }
 
-export const updateCurso = ( data ) => {
-    
+export const updateCurso = ( data, listaDeAlumnosInscribir, id_curso, listaAlumnosInscritos ) => {
+    return new Promise( ( resolve, reject ) => {
+        try {
+            /* 
+                Barremos la data de los alumnos a inscribir y solo mandamos el id_usuario
+                tambien excluimos a los alumnos que ya se encuentran inscritos
+            */
+            let arrIdsAlumnosInscrito = listaAlumnosInscritos.map( alumnoInscrito => alumnoInscrito.id );
+            let auxListaAlumnosInscribir = [];
+            listaDeAlumnosInscribir.map( alumno => {
+                // alumno[ 'alumno_usuario.id' ]
+                if( !arrIdsAlumnosInscrito.includes( alumno['alumno_usuario.id_usuario'] ) ) {
+                    auxListaAlumnosInscribir.push( alumno['alumno_usuario.id'] );
+                }                
+            } );
+
+            const URI = `http://${ process.env.REACT_APP_IP_API }:8000/api/maestros/actualizarInfoCurso`;
+            console.log( auxListaAlumnosInscribir );
+            axios({
+                method: 'POST',
+                headers: authHeader(),
+                url: URI,
+                data: {
+                    cursoInfo: data,
+                    listaDeAlumnosInscribir: auxListaAlumnosInscribir,
+                    id_curso: id_curso
+                }
+            })
+            .then( res => {
+                resolve( res );
+            } )
+            .catch( err => {
+                reject( false );
+            } )
+        }
+        catch( err ) {
+            reject( false );
+        }
+    } );
+
 }

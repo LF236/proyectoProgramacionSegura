@@ -35,14 +35,25 @@ module.exports = ( sequelize, DataTypes ) => {
     }
 
     const Alumno = sequelize.define( 'Alumno', cols, config );
-    // Alumno.associate = modelos => {
-    //     Alumno.hasOne( modelos.Usuario, {
-    //         as: 'alumno_usuario',
-    //         foreignKey: {
-    //             allowNull: false,
-    //             name: 'id'
-    //         }
-    //     } );
-    // }
+
+    Alumno.associate = modelos => {
+        Alumno.hasOne( modelos.Usuario, {
+            as: 'alumno_usuario',
+            foreignKey: {
+                allowNull: false,
+                name: 'id'
+            },
+            onDelete: 'CASCADE'
+        } );
+
+        Alumno.belongsToMany( modelos.Curso, {
+            as: 'alumnos_inscritos',
+            through: 'ListaAlumnos',
+            foreignKey: 'id_alumno',
+            otherKey: 'id_curso',
+            timestamps: false
+        } );
+    }
+
     return Alumno;
 }

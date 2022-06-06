@@ -50,5 +50,16 @@ module.exports = ( sequelize, DataTypes ) => {
     }
 
     const Curso = sequelize.define( 'Curso', cols, config );
+    Curso.associate = modelos => {
+        Curso.belongsToMany( modelos.Alumno, {
+            as: 'alumnos_inscritos',
+            through: 'ListaAlumnos',
+            foreignKey: 'id_curso',
+            otherKey: 'id_alumno',
+            timestamps: false
+        } );
+    }
+    
+
     return Curso;
 }

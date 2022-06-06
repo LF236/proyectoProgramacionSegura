@@ -1,4 +1,4 @@
-const { obtenerListaDeCursos, obtenerIdMaestro, storageCursoDB, listaAlumnos, obtenerInfoCurso, listaAlumnosInscritos } = require("../helpers/consultasMaestros");
+const { obtenerListaDeCursos, obtenerIdMaestro, storageCursoDB, listaAlumnos, obtenerInfoCurso, listaAlumnosInscritos, updateCursoDb, inscribirAlumnos } = require("../helpers/consultasMaestros");
 
 const apiControllersMaestros = {
     getListaCursos: async ( req, res ) => {
@@ -60,8 +60,24 @@ const apiControllersMaestros = {
         }
     },
 
-    updateCurso: ( req, res ) => {
-        res.send( 'HOLI' );
+    updateCurso: async ( req, res ) => {
+        const { cursoInfo, listaDeAlumnosInscribir, id_curso } = req.body;
+        try {
+            // Actualizar información del curso
+            await updateCursoDb( id_curso, cursoInfo );
+            // Si se seleccionaron alumnos para inscribir los hacemos xd
+            console.log( listaDeAlumnosInscribir );
+            if( listaDeAlumnosInscribir.length > 0 ) {
+                console.log( 'Se vana inscribir alumnos XD' );
+                await inscribirAlumnos( id_curso, listaDeAlumnosInscribir );
+            }
+            res.send( 'OK' );
+        }
+        catch( err ) {
+            console.log( err );
+            return res.send( false );
+        }
+        
     }
 }
 
