@@ -104,7 +104,7 @@ const CmpMaestrosCursos = () => {
                                             </Typography>
                                         </CardContent>
                                         <CardActions>
-                                            <Button size='small'>Ver</Button>
+                                            <Button size='small'><Link underline='none' href={ `maestros/verCurso?id_curso=${ curso.id }` }>Ver</Link></Button>
                                             <Button size='small'><Link underline='none' href={ `maestros/editarCurso?id_curso=${ curso.id }` }>Editar</Link></Button>
                                         </CardActions>                
                                     </Card>                                    

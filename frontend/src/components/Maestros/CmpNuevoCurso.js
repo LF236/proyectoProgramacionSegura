@@ -86,7 +86,7 @@ const CmpNuevoCurso = () => {
                 sx={{
                     display: 'flex',
                     flexDirection: 'column',
-                    alignItems: 'center'
+                    alignItems: 'center',
                 }}
             >
                 <Avatar sx={ { m: 1, bgcolor: 'primary.main' } }>

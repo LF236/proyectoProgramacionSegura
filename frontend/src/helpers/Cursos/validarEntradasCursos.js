@@ -14,3 +14,7 @@ export const validarUpdateCurso = ( data ) => {
     if( data.descripcion == undefined || data.descripcion.length <= 10 ) listaErrores.push( 'Ingresa una descripción más grande' );
     return listaErrores;
 }
+
+export const validarCrearEjercicio = ( data ) => {
+    console.log( data );
+}
