@@ -46,7 +46,7 @@ export const validarCrearEjercicio = ( data, files ) => {
     if( !validarEntradasPruebaSalida( data.entradas_prueba ) ) listaErrores.push( 'Formato de entradas de prueba invalido' );
     if( data.salidas_esperadas == undefined ) listaErrores.push( 'Ingresa las entradas de salida' );
     if( !validarEntradasPruebaSalida( data.salidas_esperadas ) ) listaErrores.push( 'Formato de salidas esperadas invalidas' );
-    if( entradas_to_json( data.entradas_prueba ).length != entradas_to_json( data.salidas_esperadas ).length  ) listaErrores.push( 'La cantidad de entradas de pruebas y de salidas debe ser la misma' );
+    if( ( data.entradas_prueba && data.salidas_esperadas ) &&( entradas_to_json( data.entradas_prueba ).length != entradas_to_json( data.salidas_esperadas ).length ) ) listaErrores.push( 'La cantidad de entradas de pruebas y de salidas debe ser la misma' );
     // Validacion de archivos
     if( files.script_inicializacion == undefined ) listaErrores.push( 'Agrega el Script de inicialización' );
     if( files.script_inicializacion && !validarTipoArchivosValidos( files.script_inicializacion.name ) ) listaErrores.push( 'El Script de inicialización debe ser ".sh"' );

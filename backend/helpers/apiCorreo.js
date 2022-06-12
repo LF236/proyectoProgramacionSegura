@@ -11,7 +11,7 @@ const generateVerificationCode = () => {
 }
 
 const transporter = nodeMailer.createTransport({
-    service: 'gmail',
+    service: 'hotmail',
     auth: {
         user: process.env.EMAIL_API,
         pass: process.env.PASS_EMAIL_API
@@ -40,6 +40,7 @@ const sendVerificationCode = ( emailTo, nombre, codigoVerificacion ) => {
         // Enviamos el mensaje
         transporter.sendMail( mailOptions, ( error, info ) =>{
             if( error ) {
+                console.log( error );
                 reject( false );
             } else {
                 resolve( true );

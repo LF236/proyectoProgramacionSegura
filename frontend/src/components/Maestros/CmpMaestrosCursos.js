@@ -75,7 +75,7 @@ const CmpMaestrosCursos = () => {
                             { cursos.map( curso => (
                                 <Grid
                                     item
-                                    key={ curso }
+                                    key={ curso.id }
                                     xs={ 21 }
                                     sm={ 6 }
                                     md={ 4 }
