@@ -1,4 +1,5 @@
-const { obtenerListaDeCursos, obtenerIdMaestro, storageCursoDB, listaAlumnos, obtenerInfoCurso, listaAlumnosInscritos, updateCursoDb, inscribirAlumnos } = require("../helpers/consultasMaestros");
+const { obtenerListaDeCursos, obtenerIdMaestro, storageCursoDB, listaAlumnos, obtenerInfoCurso, listaAlumnosInscritos, updateCursoDb, inscribirAlumnos, guardarEjercicioDb, getEjerciciosCurso } = require("../helpers/consultasMaestros");
+const validarScriptsAlCrearEjercicio = require("../helpers/validarScriptsAlCrearEjercicio");
 
 const apiControllersMaestros = {
     getListaCursos: async ( req, res ) => {
@@ -78,6 +79,33 @@ const apiControllersMaestros = {
             return res.send( false );
         }
         
+    },
+
+    guardarEjercicio: async ( req, res ) => {
+        let id_ejercicio = req.id_ejercicio;
+        let listaErrores = await validarScriptsAlCrearEjercicio( id_ejercicio );
+        if( listaErrores.length > 0 ) {
+            return res.status( 401 ).send( listaErrores );
+        }
+
+        try {
+            await guardarEjercicioDb( req.body.id_curso, id_ejercicio, req.body );
+            return res.send( 'OK' );
+        }
+        catch( err ) {
+            return res.status( 401 ).send( [ 'Error en el servidor' ] );
+        }
+    },
+
+    getEjerciciosCurso: async ( req, res ) => {
+        try {
+            let id_curso = req.query.id_curso;
+            let cursos = await getEjerciciosCurso( id_curso );
+            res.send( cursos );
+        }
+        catch( err ) {
+            res.status( 500 ).send( 'Error en el servidor, contacte al administrador' );
+        }
     }
 }
 

@@ -137,3 +137,48 @@ export const updateCurso = ( data, listaDeAlumnosInscribir, id_curso, listaAlumn
     } );
 
 }
+
+export const guardarEjercicio = ( data ) => {
+    return new Promise( ( resolve, reject ) => {
+        try {
+            const URI = `http://${ process.env.REACT_APP_IP_API }:8000/api/maestros/crearEjercicio`;
+            console.log( data );
+            
+            axios({
+                method: 'POST',
+                url: URI,
+                // headers: { 'Content-Type': 'multipart/form-data' },
+                data: data,
+                config: { headers: { 'Content-Type': 'multipart/form-data' } }        
+            })
+            .then( res => {
+                // console.log( res );
+                resolve( res );
+            } )
+            .catch( err => {
+                if( err.response != undefined && err.response.status == 401 ) {
+                    return reject( err.response.data );
+                } else {
+                    return reject( [ 'Modificaste un archivo ya seleccionado, recarga la página y reinicia el proceso' ] );
+                }
+            } )
+
+        }
+        catch( err ) {
+            reject( 'Modificaste un archivo ya seleccionado, recarga la página y reinicia el proceso' );
+        }
+    } )
+}
+
+export const getEjercicios = ( id_curso ) => {
+    return new Promise( async ( resolve, reject ) => {
+        try {
+            const URI = `http://${ process.env.REACT_APP_IP_API }:8000/api/maestros/ejerciciosCurso`;
+            let data = await axios.get( URI, { headers: authHeader(), params: { id_curso } } )
+            resolve( data.data );
+        }
+        catch( err ){
+            reject( err );
+        }
+    })
+}

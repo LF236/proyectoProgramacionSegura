@@ -1,15 +1,49 @@
 import React, { useState } from 'react';
-import { Container, Box, Avatar, Typography, Grid, TextField, Input, Button, Fade, Alert } from '@mui/material';
+import { Container, Box, Avatar, Typography, Grid, TextField, Input, Button, Fade, Alert, AlertTitle } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { validarCrearEjercicio } from '../../helpers/Cursos/validarEntradasCursos';
-const CmpCrearEjercicio = () => {
+import { generarFormatoFormulario } from '../../helpers/generarFormatoFormulario';
+import { guardarEjercicio } from '../../services/maestrosServices';
+import { useLocation, useNavigate } from 'react-router-dom';
+const CmpCrearEjercicio = ( ) => {
     const [ alertError, setAlertError ] = useState( false );
     const [ messageError, setMessageError ] = useState( '' );
+    const [ suceesAlert, setSuceesAlert ] = useState( false );
     const [ form, setForm ] = useState( {} );
+    const [ filesForm, setFilesForm ] = useState( {} );
+    const location = useLocation();
+    const navigate = useNavigate();
     const handleSubmit = ( e ) => {
         e.preventDefault();
-        validarCrearEjercicio( form );
+        let listaErrores = validarCrearEjercicio( form, filesForm );
+        if( listaErrores.length == 0 ) {
+            let formEjercicio = generarFormatoFormulario( form, filesForm, location.state.id_curso );
+            guardarEjercicio( formEjercicio )
+            .then( res => {
+                if( res.data == 'OK' ) {
+                    setSuceesAlert( true );
+                    setTimeout( () => {
+                        setSuceesAlert( false );
+                        return navigate( `/maestros/verCurso?id_curso=${ location.state.id_curso }` );
+                    }, 2000 );
+                }
+            } )
+            .catch( err => {
+                setMessageError( err[ 0 ] );
+                setAlertError( true );
+                setTimeout( () => {
+                    setAlertError( false );
+                }, 2000 )
+            } )
+        }
+        else {
+            setMessageError( listaErrores[ 0 ] );
+            setAlertError( true );
+            setTimeout( () => {
+                setAlertError( false );
+            }, 2000 )
+        }
         // alert( 'Enviando Datos' );
     }
 
@@ -20,8 +54,27 @@ const CmpCrearEjercicio = () => {
         });
     }
 
+    const handleInputFileChange = ( e ) => {
+        // console.log( e.target.files[ 0 ] );
+        // console.log( e.target.name )
+        setFilesForm({
+            ...filesForm,
+            [ e.target.name ] : e.target.files[ 0 ]
+        });
+    }
+
     return (
         <Container maxWidth='sm' component='main'>
+            <Fade in={ suceesAlert }>
+                <Alert 
+                    severity='success'
+                    style={ { width: '100vw', position: 'fixed', zIndex: '10', right: 0 } }
+                >
+                    <AlertTitle>Ejercicio Guardado y Comprobado Correctamente</AlertTitle>
+                    Seras redirigido al Curso en — <strong>2 segundos</strong>
+                </Alert>
+            </Fade>
+
             <Fade in={ alertError }>
                 <Alert
                     severity='error'
@@ -70,6 +123,7 @@ const CmpCrearEjercicio = () => {
                                 rows={ 3 }
                                 label='Descripcion'
                                 name='descripcion'
+                                onChange={ handleInputFormChange }
                             />
                         </Grid>
 
@@ -82,6 +136,7 @@ const CmpCrearEjercicio = () => {
                                 label='Entradas de Prueba'
                                 helperText='EJ: 1,2,3,4'
                                 autoFocus
+                                onChange={ handleInputFormChange }
                             />
                         </Grid>
 
@@ -93,6 +148,7 @@ const CmpCrearEjercicio = () => {
                                 fullWidth
                                 label='Salidas Esperadas'
                                 helperText='EJ: 1,2,3'
+                                onChange={ handleInputFormChange }
                             />
                         </Grid>
 
@@ -105,6 +161,7 @@ const CmpCrearEjercicio = () => {
                                     sx={{
                                         display: 'none'
                                     }}
+                                    onChange={ handleInputFileChange }
                                 />
                                 <Button variant='outlined' component='span' fullWidth startIcon={ <UploadFileIcon /> }>
                                     Script de Inicialización
@@ -121,6 +178,7 @@ const CmpCrearEjercicio = () => {
                                     sx={{
                                         display: 'none'
                                     }}
+                                    onChange={ handleInputFileChange }
                                 />
                                 <Button variant='outlined' component='span' fullWidth startIcon={ <UploadFileIcon /> }>
                                     Script de Comprobación de Parámetros
@@ -137,6 +195,7 @@ const CmpCrearEjercicio = () => {
                                     sx={{
                                         display: 'none'
                                     }}
+                                    onChange={ handleInputFileChange }
                                 />
                                 <Button variant='outlined' component='span' fullWidth startIcon={ <UploadFileIcon /> }>
                                     Script de Comprobación del Estado Final

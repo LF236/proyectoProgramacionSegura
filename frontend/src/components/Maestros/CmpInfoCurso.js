@@ -1,14 +1,17 @@
-import { CardActionArea, Container, CssBaseline, Grid, Stack, Typography, Button, Link } from '@mui/material';
+import { CardActionArea, Container, CssBaseline, Grid, Stack, Typography, Button } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { getInfoCurso } from '../../services/maestrosServices';
+import { Link, useSearchParams } from 'react-router-dom';
+import { getEjercicios, getInfoCurso } from '../../services/maestrosServices';
+import CmpTablaEjercicios from './CmpTablaEjercicios';
 
 const CmpInfoCurso = () => {
     const [ searchParams ] = useSearchParams();
     const [ infoCurso, setInfoCurso ] = useState( '' );
+    const [ listaEjercicios, setListaEjercicios ] = useState( [] );
     useEffect( async () => {
         const id_curso = searchParams.get( 'id_curso' );
         setInfoCurso( await getInfoCurso( id_curso ) );
+        setListaEjercicios( await getEjercicios( id_curso ) );
     }, [] );
     return (
         <>
@@ -30,13 +33,18 @@ const CmpInfoCurso = () => {
                             justifyContent='start'
                         >
                             <Button variant='contained'>
-                                <Link href='/maestros/crearEjercicio' color='inherit' underline='none'>Crear Ejercicio</Link>
+                                <Link to='/maestros/crearEjercicio' state={ { id_curso: searchParams.get( 'id_curso' ) } } style={{ color: 'white', textDecoration: 'none' }}>
+                                    Crear Ejercicio
+                                </Link>
                             </Button>
-
                             <Button variant='outlined' color='error'>Eliminar Ejercicio</Button>
                         </Stack>
                     </Grid>
-                        
+                </Grid>
+                <Grid container spacing={ 4 }>
+                    <Grid item xs={12} sm={12}>
+                        <CmpTablaEjercicios listaEjercicios={ listaEjercicios }/>
+                    </Grid>
                 </Grid>
             </Container>
         </>

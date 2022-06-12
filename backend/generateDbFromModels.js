@@ -1,5 +1,6 @@
 require('dotenv').config()
 const sequelize = require('sequelize');
+const db = require( './database/models' );
 const generateDB = async() => {
 
 
@@ -9,12 +10,15 @@ const generateDB = async() => {
             // require('../database/models');
             // require('../database/models/IncProblematica').sequelize.sync();
             // require('../database/models/IncProblematica').sequelize.sync({ force: true });
-            // require('../database/models/IncIncidencia').sequelize.sync({ force: true });               
+            // require('../database/models/IncIncidencia').sequelize.sync({ force: true });
             // require('../database/models/IncAsignacion').sequelize.sync({ force: true });
             // require('../database/models/IncIncidenciaHistorial').sequelize.sync({ force: true });
             // require('../database/models/IncArchivo').sequelize.sync({ force: true });
             // require('../database/models/IncComentario').sequelize.sync({ force: true });
-            await require('./database/models').sequelize.sync({ force: true });
+
+            // await require('./database/models').sequelize.sync({ force: true });
+            await db.Ejercicio.sync({ force: true });
+
             console.log(true);
 
 

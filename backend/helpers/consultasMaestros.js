@@ -161,6 +161,44 @@ const listaAlumnosInscritos = ( id_curso ) => {
     } );
 }
 
+const guardarEjercicioDb = ( id_curso, id_ejercicio, data ) => {
+    return new Promise( async ( resolve, reject ) => {
+        try {
+            console.log( data );
+            await db.Ejercicio.create({
+                id: id_ejercicio,
+                id_curso: id_curso,
+                nombre: data.nombre,
+                descripcion: data.descripcion,
+                directorio_archivos: `files/${ id_ejercicio }`,
+                entradas_prueba: JSON.parse( `[${ data.entradas_prueba }]`),
+                entradas_salida: JSON.parse( `[${ data.salidas_esperadas }]` )
+            });
+            resolve( true );
+        }
+        catch( err ) {
+            reject( 'Error en el servidor, contacta al administrador' );
+        }
+    } )
+}
+
+const getEjerciciosCurso = ( id_curso ) => {
+    return new Promise( async ( resolve, reject ) => {
+        try {
+            let listaEjercicios = await db.Ejercicio.findAll({
+                where: {
+                    id_curso: id_curso
+                },
+                raw: true,
+                attributes: [ 'nombre', 'createdAt' ]
+            });
+            resolve( listaEjercicios );
+        }
+        catch( err ) {
+            reject( false );
+        }
+    })
+}
 module.exports = {
     obtenerListaDeCursos,
     obtenerIdMaestro,
@@ -169,5 +207,7 @@ module.exports = {
     obtenerInfoCurso,
     listaAlumnosInscritos,
     updateCursoDb,
-    inscribirAlumnos
+    inscribirAlumnos,
+    guardarEjercicioDb,
+    getEjerciciosCurso
 }
