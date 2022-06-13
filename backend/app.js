@@ -18,6 +18,9 @@ app.use( '/api', apiRoutes );
 // Config files of routes teachers
 const apiRoutesMaestros = require( './routes/apiRoutesMaestros' );
 app.use( '/api/maestros', apiRoutesMaestros );
+// Config files of routes Students
+const apiRoutesAlumnos = require( './routes/apiRoutesAlumnos' );
+app.use( '/api/alumnos', apiRoutesAlumnos );
 // Listening to server
 app.listen( port, () => {
     console.log( `Server is ready in http://localhost:${ port }`.rainbow );
