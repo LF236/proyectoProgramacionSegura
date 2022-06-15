@@ -17,8 +17,8 @@ const generateDB = async() => {
             // require('../database/models/IncComentario').sequelize.sync({ force: true });
 
             // await require('./database/models').sequelize.sync({ force: true });
-            await db.Ejercicio.sync({ force: true });
-
+            // await db.Ejercicio.sync({ force: true });
+            await db.Respuesta.sync( { force: true } );
             console.log(true);
 
 

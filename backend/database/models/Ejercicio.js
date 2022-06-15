@@ -60,5 +60,13 @@ module.exports = ( sequelize, DataTypes ) => {
     }
     
     const Ejercicio = sequelize.define( 'Ejercicio', cols, config );
+
+    Ejercicio.associate= modelos => {
+        Ejercicio.hasMany( modelos.Respuesta, {
+            as: 'RespuestaAlumno',
+            foreignKey: 'id_ejercicio'
+        });
+    }
+
     return Ejercicio;
 }
