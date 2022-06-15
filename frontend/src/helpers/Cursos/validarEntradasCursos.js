@@ -57,3 +57,11 @@ export const validarCrearEjercicio = ( data, files ) => {
     
     return listaErrores;
 }
+
+export const validarEntradasIntento = ( files ) => {
+    const listaErrores = [];
+    if( files.script_intento == undefined ) listaErrores.push( 'Agrega tu Script' );
+    if( files.script_intento && !validarTipoArchivosValidos( files.script_intento.name ) ) listaErrores.push( 'El script debe ser .sh' );
+    return listaErrores;
+
+}

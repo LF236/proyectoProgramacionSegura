@@ -52,7 +52,7 @@ const CmpAlumnosCursoTabla = ( { listaEjercicios } ) => {
                             </TableCell>
                             <TableCell>
                                 <Button variant='contained' startIcon={ <RemoveRedEyeIcon /> }>
-                                    <Link to='/alumnos/infoEjercicio' state={ { id_ejercicio: ejercicio.id } }>Ver</Link>
+                                    <Link to='/alumnos/infoEjercicio' state={ { id_ejercicio: ejercicio.id } } style={ { textDecoration: 'none', color: 'white' } }>Ver</Link>
                                 </Button>
                             </TableCell>
                         </TableRow>

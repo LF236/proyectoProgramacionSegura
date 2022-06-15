@@ -75,6 +75,7 @@ const CmpAlumnosCursos = () => {
                                                 to='/alumnos/verCurso' 
                                                 style={{ color: 'white', textDecoration: 'none' }}
                                                 state={ { id_curso: curso.id } }
+                                                
                                             >
                                                 Ver
                                             </Link>

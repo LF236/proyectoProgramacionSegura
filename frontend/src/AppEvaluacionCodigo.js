@@ -22,6 +22,7 @@ import CmpInfoCurso from './components/Maestros/CmpInfoCurso';
 import CmpCrearEjercicio from './components/Maestros/CmpCrearEjercicio';
 import CmpAlumnoInfoCurso from './components/Alumnos/CmpAlumnoInfoCurso';
 import CmpAlumoInfoEjercicio from './components/Alumnos/CmpAlumoInfoEjercicio';
+import CmpIntentarEjercicio from './components/Alumnos/CmpIntentarEjercicio';
 
 const AppEvaluacionCodigo = () => {
     const { user, setUser, isLoading } = useFindUser();
@@ -52,7 +53,8 @@ const AppEvaluacionCodigo = () => {
                 children: [
                     { path: '', element: <CmpAlumnosCursos /> },
                     { path: 'verCurso', element: <CmpAlumnoInfoCurso /> },
-                    { path: 'infoEjercicio', element: <CmpAlumoInfoEjercicio /> }
+                    { path: 'infoEjercicio', element: <CmpAlumoInfoEjercicio /> },
+                    { path: 'intentarEjercicio', element: <CmpIntentarEjercicio /> }
                 ]
             },
             { path: '*', element: <CmpNotFound /> }
