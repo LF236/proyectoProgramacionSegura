@@ -50,10 +50,13 @@ export const validarCrearEjercicio = ( data, files ) => {
     // Validacion de archivos
     if( files.script_inicializacion == undefined ) listaErrores.push( 'Agrega el Script de inicialización' );
     if( files.script_inicializacion && !validarTipoArchivosValidos( files.script_inicializacion.name ) ) listaErrores.push( 'El Script de inicialización debe ser ".sh"' );
+    
     if( files.script_comprobacion_parametros == undefined ) listaErrores.push( 'Agrega el Script de comprobación de parámetros' );
     if( files.script_comprobacion_parametros && !validarTipoArchivosValidos( files.script_comprobacion_parametros.name ) ) listaErrores.push( 'El Script de comprobación de parámetros debe ser ".sh"' );
-    if( files.script_comprobacion_final == undefined ) listaErrores.push( 'Agrega el Script de comprobación final' );
-    if( files.script_comprobacion_final && !validarTipoArchivosValidos( files.script_comprobacion_final.name ) ) listaErrores.push( 'El Script de comprobación de final debe ser ".sh"' );
+
+    // if( files.script_comprobacion_final == undefined ) listaErrores.push( 'Agrega el Script de comprobación final' );
+    // if( files.script_comprobacion_final && !validarTipoArchivosValidos( files.script_comprobacion_final.name ) ) listaErrores.push( 'El Script de comprobación de final debe ser ".sh"' );
+
     
     return listaErrores;
 }

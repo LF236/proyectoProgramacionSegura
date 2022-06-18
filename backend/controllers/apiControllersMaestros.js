@@ -87,14 +87,14 @@ const apiControllersMaestros = {
         if( listaErrores.length > 0 ) {
             return res.status( 401 ).send( listaErrores );
         }
-
-        try {
-            await guardarEjercicioDb( req.body.id_curso, id_ejercicio, req.body );
-            return res.send( 'OK' );
-        }
-        catch( err ) {
-            return res.status( 401 ).send( [ 'Error en el servidor' ] );
-        }
+        res.send( 'TESTING' );
+        // try {
+        //     await guardarEjercicioDb( req.body.id_curso, id_ejercicio, req.body );
+        //     return res.send( 'OK' );
+        // }
+        // catch( err ) {
+        //     return res.status( 401 ).send( [ 'Error en el servidor' ] );
+        // }
     },
 
     getEjerciciosCurso: async ( req, res ) => {

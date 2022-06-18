@@ -11,6 +11,11 @@ const validarScriptsAlCrearEjercicio = async ( id_ejercicio ) => {
     }
     fs.mkdirSync( `${ path_ejercicio }/testing` );
 
+    // Verificamos si existe el Script de comprobacion final
+    if( fs.existsSync( `${ path_ejercicio }/script_comprobacion_final.sh` ) ) {
+        fs.copyFileSync( `${ path_ejercicio }/script_comprobacion_final.sh`, `${ path_ejercicio }/testing/script_comprobacion_final.sh` );
+        
+    }
     // Copiar los Scrips que se van a ejecutar para comprobar que no son ciclos u inyección
     fs.copyFileSync( `${ path_ejercicio }/script_comprobacion_final.sh`, `${ path_ejercicio }/testing/script_comprobacion_final.sh` );
     fs.copyFileSync( `${ path_ejercicio }/script_inicializacion.sh`, `${ path_ejercicio }/testing/script_inicializacion.sh` );

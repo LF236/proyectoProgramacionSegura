@@ -34,6 +34,10 @@ const apiControllersAlumnos = {
             console.log( err );
             res.status( 500 ).send( 'Error en el servidor' );
         }
+    },
+
+    procesarEjercicios: ( req, res ) => {
+        res.send( 'Hello World' );
     }
 }
 

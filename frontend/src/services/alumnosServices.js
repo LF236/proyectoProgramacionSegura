@@ -42,3 +42,18 @@ export const getEjerciciosMisRespuestas = ( id_ejercicio ) => {
         }
     } )
 }
+
+export const subirIntentoEjercicio = ( id_ejercicio, data ) => {
+    return new Promise( async ( resolve, reject ) => {
+        try{
+            let dataFalsa = { msg: 'Hola' };
+            const URI = `http://localhost:8000/api/alumnos/procesarIntentoEjercicio`;
+            let res = await axios( { method: 'POST', url: URI, data: dataFalsa } );
+            console.log( res );
+            resolve( res );
+        }
+        catch( err ) {
+            reject( false );
+        }
+    } )
+}

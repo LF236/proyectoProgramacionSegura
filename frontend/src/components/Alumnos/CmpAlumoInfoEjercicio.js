@@ -1,7 +1,7 @@
 import { Button, Container, CssBaseline, Grid, Stack, Typography, Modal, Fade, Box, Backdrop, Alert, Input, CircularProgress } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { getEjerciciosMisRespuestas } from '../../services/alumnosServices';
+import { getEjerciciosMisRespuestas, subirIntentoEjercicio } from '../../services/alumnosServices';
 import { styleModalIntento } from '../../themes/styleModalInteto';
 import CmpIntentosRespuestasTabla from './CmpIntentosRespuestasTabla';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
@@ -38,7 +38,17 @@ const CmpAlumoInfoEjercicio = () => {
         // Primero se validan las entradas
         let errores = validarEntradasIntento( filesForm );
         if( errores.length == 0 ) {
-
+            subirIntentoEjercicio( 'das', 'das' )
+            .then( res => {
+                console.log( res );
+            } )
+            .catch( err => {
+                setMessageError( 'Error en el servidor' );
+                setAlertError( true );
+                setTimeout( () => {
+                    setAlertError( false );
+                }, 2000 )
+            } )
         } else {
             setMessageError( errores[ 0 ] );
             setAlertError( true );
