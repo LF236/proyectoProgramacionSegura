@@ -1,4 +1,5 @@
-const { obtenerMisCursos, getEjerciciosCurso, getInfoEjercicioRespuestas, getInfoEjercicioDb } = require("../helpers/consultasAlumnos");
+const calificarEjercicioAlumno = require("../helpers/calificarEjercicioAlumno");
+const { obtenerMisCursos, getEjerciciosCurso, getInfoEjercicioRespuestas, getInfoEjercicioDb, almacenarResultadoDb } = require("../helpers/consultasAlumnos");
 
 const apiControllersAlumnos = {
     misCursos: async ( req, res ) => {
@@ -46,8 +47,15 @@ const apiControllersAlumnos = {
         }
     },
 
-    procesarEjercicios: ( req, res ) => {
-        res.send( 'Hello World' );
+    procesarEjercicios: async ( req, res ) => {
+        try {        
+            let resultado = await calificarEjercicioAlumno( req.body.id_ejercicio );
+            await almacenarResultadoDb( req.userId, req.body.id_ejercicio, resultado );
+            // console.log( resultado );
+            res.send( 'OK' );
+        } catch( err ) {
+            res.status( 500 ).send( 'Error en el servidor' );
+        }
     }
 }
 

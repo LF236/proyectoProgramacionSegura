@@ -1,4 +1,4 @@
-import { Button, Container, CssBaseline, Grid, Stack, Typography, Modal, Fade, Box, Backdrop, Alert, Input, CircularProgress } from '@mui/material';
+import { Button, Container, CssBaseline, Grid, Stack, Typography, Modal, Fade, Box, Backdrop, Alert, AlertTitle ,Input, CircularProgress } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { getEjerciciosMisRespuestas, getInfoEjercicio, subirIntentoEjercicio } from '../../services/alumnosServices';
@@ -17,6 +17,7 @@ const CmpAlumoInfoEjercicio = () => {
     const [ success, setSuccess ] = useState( false );
     const [ filesForm, setFilesForm ] = useState( {} );
     const [ infoEjercicio, setInfoEjercicio ] = useState( {} );
+    const [ suceesAlert, setSuceesAlert ] = useState( false );
     const handleOpenModalIntento = () => setOpenModalIntento( true );
     const handleCloseModalIntento = () => setOpenModalIntento( false );
     const location = useLocation();
@@ -38,16 +39,29 @@ const CmpAlumoInfoEjercicio = () => {
     const handleSubmitIntento = () => {
         // Primero se validan las entradas
         let errores = validarEntradasIntento( filesForm );
+        setSuccess(false);
+        setLoading(true);
         if( errores.length == 0 ) {
-            subirIntentoEjercicio( 'das', 'das' )
+            subirIntentoEjercicio( location.state.id_ejercicio, filesForm )
             .then( res => {
-                console.log( res );
+                if( res.data == 'OK' ) {
+                    setSuccess(true);
+                    setLoading(false);
+                    setSuceesAlert( true );
+                    setTimeout( () => {
+                        setSuceesAlert( false );
+                        window.location.reload();
+                    }, 2000 )
+                }                
             } )
             .catch( err => {
+                console.log( err );
                 setMessageError( 'Error en el servidor' );
                 setAlertError( true );
                 setTimeout( () => {
                     setAlertError( false );
+                    setSuccess(false);
+                    setLoading(false);
                 }, 2000 )
             } )
         } else {
@@ -55,6 +69,8 @@ const CmpAlumoInfoEjercicio = () => {
             setAlertError( true );
             setTimeout( () => {
                 setAlertError( false );
+                setSuccess(false);
+                setLoading(false);
             }, 2000 )
         }
         // if (!loading) {
@@ -85,6 +101,15 @@ const CmpAlumoInfoEjercicio = () => {
         <>
             <CssBaseline />
             <Container maxWidth='lg'>
+                <Fade in={ suceesAlert }>
+                    <Alert 
+                        severity='success'
+                        style={ { width: '100vw', position: 'fixed', zIndex: '1000000', right: 0 } }
+                    >
+                        <AlertTitle>Ejercicio Calificado</AlertTitle>
+                        La info se va a actualizar en — <strong>2 segundos</strong>
+                    </Alert>
+                </Fade>
                 <Fade in={ alertError }>
                     <Alert
                         severity='error'

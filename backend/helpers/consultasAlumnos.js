@@ -1,3 +1,4 @@
+const { v4: uuid } = require( 'uuid' );
 const db = require( '../database/models' );
 const obtenerMisCursos = ( id_usuario ) => {
     return new Promise( async ( resolve, reject ) => {
@@ -74,10 +75,34 @@ const getInfoEjercicioDb = ( id_ejercicio ) => {
         }
     } )
 }
+
+const almacenarResultadoDb = (  id_usuario, id_ejercicio, calificacion ) => {
+    return new Promise( async ( resolve, reject ) => {
+        try {
+            // Buscamos el id del alumno
+            let alumnoId = await db.Alumno.findOne( { 
+                raw: true,
+                where: { id_usuario: id_usuario }
+            } );
+
+            await db.Respuesta.create({
+                id: uuid(),
+                id_alumno: alumnoId.id,
+                id_ejercicio: id_ejercicio,
+                resultado: calificacion
+            });
+            resolve( true );
+        }
+        catch( err ) {
+            reject( false );
+        }
+    } )
+}
 module.exports = {
     obtenerMisCursos,
     getEjerciciosCurso,
     getInfoEjercicioRespuestas,
-    getInfoEjercicioDb
+    getInfoEjercicioDb,
+    almacenarResultadoDb
 }
 // INSERT INTO Respuesta VALUES( '6b6c13bb-7a29-437d-8c34-70d91c9c6c98', '65990152-b9f8-40cb-a41a-1f15ed4b1d4d', 'db13c9ff-4b42-47db-9141-6035613864b8', 10, '2022-06-13 23:58:46', '2022-06-13 23:58:46' );

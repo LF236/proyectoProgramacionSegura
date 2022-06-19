@@ -57,13 +57,21 @@ export const getInfoEjercicio = ( id_ejercicio ) => {
     } )
 }
 
-export const subirIntentoEjercicio = ( id_ejercicio, data ) => {
+export const subirIntentoEjercicio = ( id_ejercicio, file ) => {
     return new Promise( async ( resolve, reject ) => {
         try{
-            let dataFalsa = { msg: 'Hola' };
+            let form = new FormData();
+            form.append( 'id_ejercicio', id_ejercicio );
+            form.append( 'script_intento', file.script_intento );
+            
             const URI = `http://localhost:8000/api/alumnos/procesarIntentoEjercicio`;
-            let res = await axios( { method: 'POST', url: URI, data: dataFalsa } );
-            console.log( res );
+            let res = await axios( { 
+                method: 'POST', 
+                url: URI, 
+                data: form,
+                headers: authHeader(),
+                config: { headers: { 'Content-Type': 'multipart/form-data' } }
+            } );
             resolve( res );
         }
         catch( err ) {

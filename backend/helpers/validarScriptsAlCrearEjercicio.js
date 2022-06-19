@@ -47,7 +47,9 @@ const validarScriptsAlCrearEjercicio = async ( id_ejercicio ) => {
             const { stdout, stderr } = await exec( `"${ path_ejercicio }/testing/script_comprobacion_final.sh"`, { cwd: `${ path_ejercicio }/testing`, timeout: 5000 }, )
         }
         catch( err ) {
-            listaErrores.push( 'Error al ejecutar el Script de inicialización, tiempo de ejecución excedido' );
+            if( err.code == 'ERR_CHILD_PROCESS_STDIO_MAXBUFFER' ) {
+                listaErrores.push( 'Error al ejecutar el Script de estado final, tiempo de ejecución excedido' );
+            }            
         }
     }
     
