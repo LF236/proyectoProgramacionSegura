@@ -52,7 +52,9 @@ const getInfoEjercicioRespuestas = ( id_ejercicio, id_usuario ) => {
             let ejercicioRespuesta = await db.Respuesta.findAll({
                 raw: true,
                 where: { id_ejercicio: id_ejercicio, id_alumno: alumnoId.id },
-
+                order: [
+                    ['createdAt', 'DESC']
+                ],
             } );
             
             resolve( ejercicioRespuesta );

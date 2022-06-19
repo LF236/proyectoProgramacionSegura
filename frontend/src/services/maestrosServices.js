@@ -182,3 +182,16 @@ export const getEjercicios = ( id_curso ) => {
         }
     })
 }
+
+export const getAllRespuestas = ( id_curso ) => {
+    return new Promise( async ( resolve, reject ) => {
+        try {
+            const URI = `http://${ process.env.REACT_APP_IP_API }:8000/api/maestros/getAllRespuestasEjercicio`;
+            let data = await axios.get( URI, { headers: authHeader(), params: { id_curso } } )
+            resolve( data.data );
+        }
+        catch( err ) {
+            reject( false );
+        }       
+    })
+}

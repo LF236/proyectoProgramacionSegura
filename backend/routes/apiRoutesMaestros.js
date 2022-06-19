@@ -41,5 +41,6 @@ router.get( '/infoCurso', verifyJwt, apiControllersMaestros.getInfoCurso );
 router.post( '/actualizarInfoCurso', verifyJwt, apiControllersMaestros.updateCurso );
 router.get( '/listaAlumnosInscritos', verifyJwt ,apiControllersMaestros.getListaAlumnosInscritos );
 router.get( '/ejerciciosCurso', verifyJwt, apiControllersMaestros.getEjerciciosCurso );
+router.get( '/getAllRespuestasEjercicio', verifyJwt, apiControllersMaestros.getAllRespuestas );
 router.post( '/crearEjercicio', generateIdEjercicio, upload.fields( [ { name: 'script_inicializacion', maxCount: 1 }, { name: 'script_comprobacion_parametros', maxCount: 1 }, { name: 'script_comprobacion_final', maxCount: 1 } ] ) ,apiControllersMaestros.guardarEjercicio );
 module.exports = router;

@@ -13,16 +13,15 @@ import CmpPrivateRoute from './components/CmpPrivateRoute';
 import CmpNotFound from './components/CmpNotFound';
 import CmpNuevoCurso from './components/Maestros/CmpNuevoCurso';
 import CmpMaestrosCursos from './components/Maestros/CmpMaestrosCursos';
-import CmpTest from './components/CmpTest';
 import CmpAlumnosCursos from './components/Alumnos/CmpAlumnosCursos';
 import CmpLoading from './components/CmpLoading';
-import CmpCurso from './components/Maestros/CmpCurso';
 import CmpEditarCurso from './components/Maestros/CmpEditarCurso';
 import CmpInfoCurso from './components/Maestros/CmpInfoCurso';
 import CmpCrearEjercicio from './components/Maestros/CmpCrearEjercicio';
 import CmpAlumnoInfoCurso from './components/Alumnos/CmpAlumnoInfoCurso';
 import CmpAlumoInfoEjercicio from './components/Alumnos/CmpAlumoInfoEjercicio';
 import CmpIntentarEjercicio from './components/Alumnos/CmpIntentarEjercicio';
+import CmpMaestrosInfoEjercicio from './components/Maestros/CmpMaestrosInfoEjercicio';
 
 const AppEvaluacionCodigo = () => {
     const { user, setUser, isLoading } = useFindUser();
@@ -42,7 +41,8 @@ const AppEvaluacionCodigo = () => {
                     { path: 'crearCurso', element: <CmpNuevoCurso /> },
                     { path: 'editarCurso', element: <CmpEditarCurso /> },
                     { path: 'verCurso', element: <CmpInfoCurso /> },
-                    { path: 'crearEjercicio', element: <CmpCrearEjercicio /> },                    
+                    { path: 'crearEjercicio', element: <CmpCrearEjercicio /> },
+                    { path: 'infoEjercicio', element: <CmpMaestrosInfoEjercicio /> }                
                 ]
                 
             },

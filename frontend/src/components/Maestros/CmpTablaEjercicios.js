@@ -3,6 +3,7 @@ import { TableContainer, Toolbar, Typography, Table, TableHead, TableRow, TableC
 import { Paper } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import { Link } from 'react-router-dom';
 const CmpTablaEjercicios = ({ listaEjercicios }) => {
     console.log( listaEjercicios );
     return (
@@ -37,7 +38,7 @@ const CmpTablaEjercicios = ({ listaEjercicios }) => {
                     <TableBody>
                         { listaEjercicios.map( ejercicio => (
                             <TableRow
-                                key={ ejercicio }
+                                key={ ejercicio.nombre }
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell component='th' scope='row'>
@@ -45,7 +46,15 @@ const CmpTablaEjercicios = ({ listaEjercicios }) => {
                                 </TableCell>
                                 <TableCell aling='right'>{ new Date( ejercicio.createdAt ).toDateString() }</TableCell>
                                 <TableCell>
-                                    <Button variant='contained' startIcon={ <RemoveRedEyeIcon /> }>Ver</Button>
+                                    <Button 
+                                        variant='contained' 
+                                        startIcon={ <RemoveRedEyeIcon /> }
+                                        component={ Link }
+                                        to='/maestros/infoEjercicio'
+                                        state={ { id_ejercicio: ejercicio.id } }
+                                    >
+                                        Ver
+                                    </Button>
                                 </TableCell>
                             </TableRow>
                         ) ) }

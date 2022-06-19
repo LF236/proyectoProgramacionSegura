@@ -73,14 +73,6 @@ const CmpAlumoInfoEjercicio = () => {
                 setLoading(false);
             }, 2000 )
         }
-        // if (!loading) {
-        //     setSuccess(false);
-        //     setLoading(true);
-        //     setTimeout(() => {
-        //         setSuccess(true);
-        //         setLoading(false);
-        //     }, 2000);
-        // }
     }
 
     const entradasToJson = entrada => {

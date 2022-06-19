@@ -190,7 +190,7 @@ const getEjerciciosCurso = ( id_curso ) => {
                     id_curso: id_curso
                 },
                 raw: true,
-                attributes: [ 'nombre', 'createdAt' ]
+                attributes: [ 'nombre', 'createdAt', 'id' ]
             });
             resolve( listaEjercicios );
         }
@@ -199,6 +199,65 @@ const getEjerciciosCurso = ( id_curso ) => {
         }
     })
 }
+
+const getAllRespuestasDb = ( id_ejercicio ) => {
+    return new Promise( async ( resolve, reject ) => {
+        try {
+            let respuestas = await db.Respuesta.findAll({
+                raw: true,
+                where: { id_ejercicio: id_ejercicio },
+                order: [
+                    ['createdAt', 'DESC']
+                ],    
+            });
+            
+            // Filtramos por el ultimo intento del alumno
+            let arrFilter = [];
+
+            let x = respuestas.filter( res => {
+                if( !arrFilter.includes( res.id_alumno ) ) {
+                    arrFilter.push( res.id_alumno );
+                    return res;
+                }
+            } )
+
+            // En base a X obtener la infor de los alumnos
+            let arrPromiseBusquedaAlumno = [];
+            x.map( res => {
+                arrPromiseBusquedaAlumno.push(
+                    db.Alumno.findByPk( res.id_alumno, { raw: true } )
+                );
+            } )
+
+            Promise.all( arrPromiseBusquedaAlumno )
+            .then( res => {
+                let arrPromiseBusquedaUsuario = [];
+                res.map( al => {
+                    arrPromiseBusquedaUsuario.push(
+                        db.Usuario.findByPk( al.id_usuario, { raw: true, attributes: [ 'nombre', 'apellidoPaterno', 'apellidoMaterno', 'matricula' ] } )
+                    );
+                } )
+
+                Promise.all( arrPromiseBusquedaUsuario )
+                .then( r => {
+                    // Solo mapeamos y listo
+                    x.map( ( resultado, i ) => {
+                        resultado[ 'infoUsuario' ] = r[ i ];
+                    } )                    
+                    resolve( x );
+                } )
+                
+            } )
+            
+        }
+
+        catch( err ) {
+            console.log( err );
+            reject( false );
+        }
+    } )
+}
+
 module.exports = {
     obtenerListaDeCursos,
     obtenerIdMaestro,
@@ -209,5 +268,6 @@ module.exports = {
     updateCursoDb,
     inscribirAlumnos,
     guardarEjercicioDb,
-    getEjerciciosCurso
+    getEjerciciosCurso,
+    getAllRespuestasDb
 }

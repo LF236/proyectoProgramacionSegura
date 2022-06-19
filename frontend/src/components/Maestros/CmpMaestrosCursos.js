@@ -52,7 +52,6 @@ const CmpMaestrosCursos = () => {
                                 <Button variant='contained'>
                                     <Link href='/maestros/crearCurso' color='inherit' underline='none'>Agregar Curso</Link>
                                 </Button>
-                                <Button variant='outlined'>Editar Curso</Button>
                             </Stack>
                         </Container>
                     </Box>

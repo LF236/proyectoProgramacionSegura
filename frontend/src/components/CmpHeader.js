@@ -4,45 +4,45 @@ import MenuIcon from '@mui/icons-material/Menu';
 import React, { useState } from 'react';
 import imgAdmin from '../assets/img/admin.jpg';
 import { logout } from '../services/authServices';
-const CmpHeader = ( { userInfo } ) => {
-   
-    const [ anchorElNav, setAnchorElNav ] = useState( null );
-    const [ anchorElUser, setAnchorElUser ] = useState( null );
+const CmpHeader = ({ userInfo }) => {
 
-    const pages = [ 'Cursos', 'Tareas pendientes' ];
+    const [anchorElNav, setAnchorElNav] = useState(null);
+    const [anchorElUser, setAnchorElUser] = useState(null);
+
+    const pages = [];
     // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-    const settings = [ 'Logout' ];
+    const settings = ['Logout'];
 
     const handleCloseNavMenu = () => {
-        setAnchorElNav( null );
+        setAnchorElNav(null);
     }
 
     const handleCloseUserMenu = () => {
-        setAnchorElUser( null );
+        setAnchorElUser(null);
     }
 
-    const handleOpenNavMenu = ( e ) => {
-        setAnchorElNav( e.currentTarget );
+    const handleOpenNavMenu = (e) => {
+        setAnchorElNav(e.currentTarget);
     }
 
-    const handleOpenUserMenu = ( e ) =>{
-        setAnchorElUser( e.currentTarget );
+    const handleOpenUserMenu = (e) => {
+        setAnchorElUser(e.currentTarget);
     }
 
-    const optionsMenuItem = ( e ) => {
+    const optionsMenuItem = (e) => {
         // Pensar en el uso de un Switch
-        const nameFunction = `${ e.target.innerHTML }`.toLowerCase();
-        switch( nameFunction ) {
-            case 'logout': 
-                if( logout() ) {
+        const nameFunction = `${e.target.innerHTML}`.toLowerCase();
+        switch (nameFunction) {
+            case 'logout':
+                if (logout()) {
                     window.location = '/home';
                 }
                 break;
         }
     }
 
-    if( !userInfo ) {
-        return(
+    if (!userInfo) {
+        return (
             <>
                 <CssBaseline />
                 <AppBar position='fixed'>
@@ -52,17 +52,17 @@ const CmpHeader = ( { userInfo } ) => {
                                 variant='h6'
                                 noWrap
                                 component='div'
-                                sx={ { mr: 2, display: { xs: 'none', md: 'flex' } } }
+                                sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
                             >
                                 <Link href='/' color='inherit' underline='none'>FEI</Link>
                             </Typography>
 
-                            <Box sx={ { flexGrow: 1, display: { xs: 'flex', md: 'none' } } }>
+                            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                                 <Typography
                                     variant='h6'
                                     noWrap
                                     component='div'
-                                    sx={ { flexGrow: 1, display: { xs: 'flex', md: 'none' } } }
+                                    sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
                                 >
                                     <Link href='/' color='inherit' underline='none'>FEI</Link>
                                 </Typography>
@@ -84,25 +84,25 @@ const CmpHeader = ( { userInfo } ) => {
                                 variant='h6'
                                 noWrap
                                 component='div'
-                                sx={ { mr: 2, display: { xs: 'none', md: 'flex' } } }
+                                sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
                             >
                                 <Link href='/' color='inherit' underline='none'>FEI</Link>
                             </Typography>
 
-                            <Box sx={ { flexGrow: 1, display: { xs: 'flex', md: 'none' } } }>
+                            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                                 <IconButton
                                     size='large'
                                     aria-label='account of current user'
                                     aria-controls='menu-appbar'
                                     aria-haspopup='true'
                                     color='inherit'
-                                    onClick={ handleOpenNavMenu }
+                                    onClick={handleOpenNavMenu}
                                 >
                                     <MenuIcon />
                                 </IconButton>
                                 <Menu
                                     id='menu-appbar'
-                                    anchorEl={ anchorElNav }
+                                    anchorEl={anchorElNav}
                                     anchorOrigin={{
                                         vertical: 'bottom',
                                         horizontal: 'left'
@@ -112,20 +112,20 @@ const CmpHeader = ( { userInfo } ) => {
                                         vertical: 'top',
                                         horizontal: 'left'
                                     }}
-                                    open={ Boolean( anchorElNav ) }
-                                    onClose={ handleCloseNavMenu }
+                                    open={Boolean(anchorElNav)}
+                                    onClose={handleCloseNavMenu}
                                     sx={{
                                         display: { xs: 'block', md: 'none' }
                                     }}
                                 >
                                     {
-                                        pages.map( page => {
-                                            return(
-                                                <MenuItem key={ page } onClick={ handleCloseNavMenu }>
-                                                    <Typography textAlign='center'>{ page }</Typography>
+                                        pages.map(page => {
+                                            return (
+                                                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                                                    <Typography textAlign='center'>{page}</Typography>
                                                 </MenuItem>
                                             )
-                                        } )
+                                        })
                                     }
                                 </Menu>
                             </Box>
@@ -134,38 +134,38 @@ const CmpHeader = ( { userInfo } ) => {
                                 variant='h6'
                                 noWrap
                                 component='div'
-                                sx={ { flexGrow: 1, display: { xs: 'flex', md: 'none' } } }
+                                sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
                             >
                                 <Link href='/' color='inherit' underline='none'>FEI</Link>
                             </Typography>
 
-                            <Box sx={ { flewGrow: 1, display: { xs: 'none', md: 'flex' } } }>
+                            <Box sx={{ flewGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                                 {
-                                    pages.map( page => {
-                                        return(
+                                    pages.map(page => {
+                                        return (
                                             <Button
-                                                key={ page }
-                                                sx={ { color: 'white', my: 2, display: 'block' } }
-                                                onClick={ handleCloseNavMenu }
+                                                key={page}
+                                                sx={{ color: 'white', my: 2, display: 'block' }}
+                                                onClick={handleCloseNavMenu}
                                             >
-                                                { page }
+                                                {page}
                                             </Button>
                                         )
-                                    } )
+                                    })
                                 }
                             </Box>
 
-                            <Box sx={ { flexGrow: 0, position: 'absolute', right: 0 } }>
+                            <Box sx={{ flexGrow: 0, position: 'absolute', right: 0 }}>
                                 <Tooltip title='Open Settings'>
-                                    <IconButton sx={ { p: 0 } } onClick={ handleOpenUserMenu }>
-                                        <Avatar alt='img_user' src={ imgAdmin }/>
+                                    <IconButton sx={{ p: 0 }} onClick={handleOpenUserMenu}>
+                                        <Avatar alt='img_user' src={imgAdmin} />
                                     </IconButton>
                                 </Tooltip>
 
                                 <Menu
-                                    sx={ { mt: '45px' } }
+                                    sx={{ mt: '45px' }}
                                     id='menu-appbar'
-                                    anchorEl={ anchorElUser }
+                                    anchorEl={anchorElUser}
                                     anchorOrigin={{
                                         vertical: 'top',
                                         horizontal: 'right'
@@ -175,17 +175,17 @@ const CmpHeader = ( { userInfo } ) => {
                                         vertical: 'top',
                                         horizontal: 'right'
                                     }}
-                                    open={ Boolean( anchorElUser ) }
-                                    onClose={ handleCloseUserMenu }
+                                    open={Boolean(anchorElUser)}
+                                    onClose={handleCloseUserMenu}
                                 >
                                     {
-                                        settings.map( setting => {
-                                            return(
-                                                <MenuItem key={ setting } onClick={ handleCloseUserMenu }>
-                                                    <Typography textAlign='center' onClick={ optionsMenuItem }>{ setting }</Typography>
+                                        settings.map(setting => {
+                                            return (
+                                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                                                    <Typography textAlign='center' onClick={optionsMenuItem}>{setting}</Typography>
                                                 </MenuItem>
                                             );
-                                        } )
+                                        })
                                     }
                                 </Menu>
                             </Box>

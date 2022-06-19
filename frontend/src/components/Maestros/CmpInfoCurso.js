@@ -36,8 +36,7 @@ const CmpInfoCurso = () => {
                                 <Link to='/maestros/crearEjercicio' state={ { id_curso: searchParams.get( 'id_curso' ) } } style={{ color: 'white', textDecoration: 'none' }}>
                                     Crear Ejercicio
                                 </Link>
-                            </Button>
-                            <Button variant='outlined' color='error'>Eliminar Ejercicio</Button>
+                            </Button>                            
                         </Stack>
                     </Grid>
                 </Grid>
