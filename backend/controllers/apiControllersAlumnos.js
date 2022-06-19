@@ -1,4 +1,4 @@
-const { obtenerMisCursos, getEjerciciosCurso, getInfoEjercicioRespuestas } = require("../helpers/consultasAlumnos");
+const { obtenerMisCursos, getEjerciciosCurso, getInfoEjercicioRespuestas, getInfoEjercicioDb } = require("../helpers/consultasAlumnos");
 
 const apiControllersAlumnos = {
     misCursos: async ( req, res ) => {
@@ -26,12 +26,22 @@ const apiControllersAlumnos = {
     ejercicioRespuestas: async ( req, res ) => {
         try {
             let id_ejercicio = req.query.id_ejercicio;
-            console.log( `${ id_ejercicio }`.blue );
-            let ejercicioRes = await getInfoEjercicioRespuestas( id_ejercicio );
+            let ejercicioRes = await getInfoEjercicioRespuestas( id_ejercicio, req.userId );
             res.send( ejercicioRes );
         }
         catch( err ) {
             console.log( err );
+            res.status( 500 ).send( 'Error en el servidor' );
+        }
+    },
+
+    getInfoEjercicio: async ( req, res ) => {
+        try {
+            let id_ejercicio = req.query.id_ejercicio;
+            let ejercicioInfo = await getInfoEjercicioDb( id_ejercicio );
+            res.send( ejercicioInfo );
+        }
+        catch( err ) {
             res.status( 500 ).send( 'Error en el servidor' );
         }
     },

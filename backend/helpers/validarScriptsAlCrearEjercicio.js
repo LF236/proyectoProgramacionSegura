@@ -11,15 +11,18 @@ const validarScriptsAlCrearEjercicio = async ( id_ejercicio ) => {
     }
     fs.mkdirSync( `${ path_ejercicio }/testing` );
 
+    // Copiar los Scrips que se van a ejecutar para comprobar que no son ciclos u inyección
     // Verificamos si existe el Script de comprobacion final
     if( fs.existsSync( `${ path_ejercicio }/script_comprobacion_final.sh` ) ) {
         fs.copyFileSync( `${ path_ejercicio }/script_comprobacion_final.sh`, `${ path_ejercicio }/testing/script_comprobacion_final.sh` );
-        
     }
-    // Copiar los Scrips que se van a ejecutar para comprobar que no son ciclos u inyección
-    fs.copyFileSync( `${ path_ejercicio }/script_comprobacion_final.sh`, `${ path_ejercicio }/testing/script_comprobacion_final.sh` );
-    fs.copyFileSync( `${ path_ejercicio }/script_inicializacion.sh`, `${ path_ejercicio }/testing/script_inicializacion.sh` );
 
+    // Verificamos si existe el Script de inicializacion
+    if( fs.existsSync( `${ path_ejercicio }/script_inicializacion.sh` ) ) {
+        fs.copyFileSync( `${ path_ejercicio }/script_inicializacion.sh`, `${ path_ejercicio }/testing/script_inicializacion.sh` );
+    }
+    
+    
     // Damos permisos a la carpeta de testing
     try {
         const { stdout, stderr } = await exec( `chmod -R 777 ${ path_ejercicio }/testing/*`, { cwd: `${ path_ejercicio }/testing`, timeout: 5000 }, )
@@ -27,21 +30,27 @@ const validarScriptsAlCrearEjercicio = async ( id_ejercicio ) => {
     catch( err ) {
         listaErrores.push( 'Error, contacte al administrador' );
     }
-    // Ejecutar script de inicializacion
-    try {
-        const { stdout, stderr } = await exec( `"${ path_ejercicio }/testing/script_inicializacion.sh"`, { cwd: `${ path_ejercicio }/testing`, timeout: 5000 }, )
-    }
-    catch( err ) {
-        listaErrores.push( 'Error al ejecutar el Script de inicialización, tiempo de ejecución excedido' );
-    }
 
+    // Ejecutar script de inicializacion
+    if( fs.existsSync( `${ path_ejercicio }/script_inicializacion.sh` ) ) {
+        try {
+            const { stdout, stderr } = await exec( `"${ path_ejercicio }/testing/script_inicializacion.sh"`, { cwd: `${ path_ejercicio }/testing`, timeout: 5000 }, )
+        }
+        catch( err ) {
+            listaErrores.push( 'Error al ejecutar el Script de inicialización, tiempo de ejecución excedido' );
+        }
+    }
+    
     // Ejecutar script de estado final
-    try {
-        const { stdout, stderr } = await exec( `"${ path_ejercicio }/testing/script_comprobacion_final.sh"`, { cwd: `${ path_ejercicio }/testing`, timeout: 5000 }, )
+    if( fs.existsSync( `${ path_ejercicio }/script_comprobacion_final.sh` ) ) { 
+        try {
+            const { stdout, stderr } = await exec( `"${ path_ejercicio }/testing/script_comprobacion_final.sh"`, { cwd: `${ path_ejercicio }/testing`, timeout: 5000 }, )
+        }
+        catch( err ) {
+            listaErrores.push( 'Error al ejecutar el Script de inicialización, tiempo de ejecución excedido' );
+        }
     }
-    catch( err ) {
-        listaErrores.push( 'Error al ejecutar el Script de inicialización, tiempo de ejecución excedido' );
-    }
+    
 
     fs.rmSync( `${ path_ejercicio }/testing`, { recursive: true, force: true } );
     // console.log( `${ path_ejercicio }`.blue );

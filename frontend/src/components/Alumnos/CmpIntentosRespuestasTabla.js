@@ -50,13 +50,13 @@ const CmpIntentosRespuestasTabla = ({ listaIntentos }) => {
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell  scope='row'>
-                                    { intento[ 'RespuestaAlumno.resultado' ] }
+                                    { intento.resultado }
                                 </TableCell>
                                 <TableCell scope='row'>
-                                    { new Date( intento[ 'RespuestaAlumno.createdAt' ] ).toLocaleString() }
+                                    { new Date( intento.createdAt).toLocaleString() }
                                 </TableCell>
                                 <TableCell scope='row'>
-                                    { estado( intento[ 'RespuestaAlumno.resultado' ] ) }
+                                    { estado( intento.resultado ) }
                                 </TableCell>
                             </TableRow>
                         ) ) }

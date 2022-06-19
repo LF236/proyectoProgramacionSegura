@@ -33,11 +33,25 @@ export const getEjerciciosMisRespuestas = ( id_ejercicio ) => {
         try {
             const URI = `http://localhost:8000/api/alumnos/ejercicioMisRespuestas`;
             let res = await axios.get( URI, { headers: authHeader(), params: { id_ejercicio: id_ejercicio } } );
+            console.log( res.data );
             resolve( res.data );
 
         }
         catch( err ){
             console.log( err );
+            reject( false );
+        }
+    } )
+}
+
+export const getInfoEjercicio = ( id_ejercicio ) => {
+    return new Promise( async ( resolve, reject ) => {
+        try {
+            const URI = `http://localhost:8000/api/alumnos/infoEjercicio`;
+            let res = await axios.get( URI, { headers: authHeader(), params: { id_ejercicio: id_ejercicio } } );
+            resolve( res.data );
+        }
+        catch( err ) {
             reject( false );
         }
     } )

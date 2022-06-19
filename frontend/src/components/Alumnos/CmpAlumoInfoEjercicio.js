@@ -1,7 +1,7 @@
 import { Button, Container, CssBaseline, Grid, Stack, Typography, Modal, Fade, Box, Backdrop, Alert, Input, CircularProgress } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { getEjerciciosMisRespuestas, subirIntentoEjercicio } from '../../services/alumnosServices';
+import { getEjerciciosMisRespuestas, getInfoEjercicio, subirIntentoEjercicio } from '../../services/alumnosServices';
 import { styleModalIntento } from '../../themes/styleModalInteto';
 import CmpIntentosRespuestasTabla from './CmpIntentosRespuestasTabla';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
@@ -16,13 +16,14 @@ const CmpAlumoInfoEjercicio = () => {
     const [ loading, setLoading ] = useState( false );
     const [ success, setSuccess ] = useState( false );
     const [ filesForm, setFilesForm ] = useState( {} );
-
+    const [ infoEjercicio, setInfoEjercicio ] = useState( {} );
     const handleOpenModalIntento = () => setOpenModalIntento( true );
     const handleCloseModalIntento = () => setOpenModalIntento( false );
     const location = useLocation();
     useEffect( async () => {
         let id_ejercicio = location.state.id_ejercicio;
         setListaIntentos( await getEjerciciosMisRespuestas( id_ejercicio ) );
+        setInfoEjercicio( await getInfoEjercicio( id_ejercicio ) );
     }, [] )
     
     const handleInputFileChange = ( e ) => {
@@ -159,20 +160,13 @@ const CmpAlumoInfoEjercicio = () => {
                 <Grid container spacing={ 4 }>
                     <Grid item xs={ 12 } md={ 6 } sx={{ mt: 5 }}>
                         <Typography component='h2' variant='h5'>
-                            { listaIntentos[ 0 ].nombre }
+                            { infoEjercicio.nombre }
                         </Typography>                       
                         
                         <Typography variant='subtitle1' color='text.secondary'>
-                            Descripcion: { listaIntentos[0].descripcion }
+                            Descripcion: { infoEjercicio.descripcion }
                         </Typography>
 
-                        <Typography variant='caption' display="block" gutterBottom>
-                            Ejemplos entrada: { JSON.stringify( entradasToJson( listaIntentos[0].entradas_prueba )[0] ) }
-                        </Typography>
-
-                        <Typography variant='caption' display="block" gutterBottom>
-                            Ejemplos Salida: { JSON.stringify( entradasToJson( listaIntentos[0].entradas_salida )[0] ) }
-                        </Typography>
                     </Grid>
                 </Grid>
                 <Grid item xs={ 12 } md={ 12 }>

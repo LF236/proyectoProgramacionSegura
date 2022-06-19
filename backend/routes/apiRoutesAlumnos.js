@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.get( '/misCursosLista', verifyJwt ,apiControllersAlumnos.misCursos );
 router.get( '/listaEjerciciosCursoMoreEjercicios', verifyJwt, apiControllersAlumnos.misEjerciciosMasInfo );
-router.get( '/ejercicioMisRespuestas', apiControllersAlumnos.ejercicioRespuestas );
+router.get( '/infoEjercicio', verifyJwt ,apiControllersAlumnos.getInfoEjercicio );
+router.get( '/ejercicioMisRespuestas', verifyJwt ,apiControllersAlumnos.ejercicioRespuestas );
 router.post( '/procesarIntentoEjercicio', apiControllersAlumnos.procesarEjercicios );
 module.exports = router;

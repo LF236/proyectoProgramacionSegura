@@ -39,15 +39,21 @@ const getEjerciciosCurso = ( id_curso ) => {
     })
 }
 
-const getInfoEjercicioRespuestas = ( id_ejercicio ) => {
+const getInfoEjercicioRespuestas = ( id_ejercicio, id_usuario ) => {
     return new Promise( async ( resolve, reject ) => {
         try {
-            let ejercicioRespuesta = await db.Ejercicio.findAll({
+            // Buscamos el id del alumno
+            let alumnoId = await db.Alumno.findOne( { 
                 raw: true,
-                where: { id: id_ejercicio },
-                include: [ 'RespuestaAlumno' ]
+                where: { id_usuario: id_usuario }
             } );
-            console.log( ejercicioRespuesta );
+            
+            let ejercicioRespuesta = await db.Respuesta.findAll({
+                raw: true,
+                where: { id_ejercicio: id_ejercicio, id_alumno: alumnoId.id },
+
+            } );
+            
             resolve( ejercicioRespuesta );
         }
         catch( err ) {
@@ -57,9 +63,21 @@ const getInfoEjercicioRespuestas = ( id_ejercicio ) => {
     } )
 }
 
+const getInfoEjercicioDb = ( id_ejercicio ) => {
+    return new Promise( async ( resolve, reject ) => {
+        try {
+            let ejercicioInfo = await db.Ejercicio.findByPk( id_ejercicio, { raw: true } );
+            resolve( ejercicioInfo );
+        }
+        catch( err ) {
+            reject( false );
+        }
+    } )
+}
 module.exports = {
     obtenerMisCursos,
     getEjerciciosCurso,
-    getInfoEjercicioRespuestas
+    getInfoEjercicioRespuestas,
+    getInfoEjercicioDb
 }
 // INSERT INTO Respuesta VALUES( '6b6c13bb-7a29-437d-8c34-70d91c9c6c98', '65990152-b9f8-40cb-a41a-1f15ed4b1d4d', 'db13c9ff-4b42-47db-9141-6035613864b8', 10, '2022-06-13 23:58:46', '2022-06-13 23:58:46' );
