@@ -9,7 +9,7 @@ const CmpHeader = ({ userInfo }) => {
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
 
-    const pages = [];
+    
     // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
     const settings = ['Logout'];
 
@@ -118,15 +118,6 @@ const CmpHeader = ({ userInfo }) => {
                                         display: { xs: 'block', md: 'none' }
                                     }}
                                 >
-                                    {
-                                        pages.map(page => {
-                                            return (
-                                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                                    <Typography textAlign='center'>{page}</Typography>
-                                                </MenuItem>
-                                            )
-                                        })
-                                    }
                                 </Menu>
                             </Box>
 
@@ -140,19 +131,6 @@ const CmpHeader = ({ userInfo }) => {
                             </Typography>
 
                             <Box sx={{ flewGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                                {
-                                    pages.map(page => {
-                                        return (
-                                            <Button
-                                                key={page}
-                                                sx={{ color: 'white', my: 2, display: 'block' }}
-                                                onClick={handleCloseNavMenu}
-                                            >
-                                                {page}
-                                            </Button>
-                                        )
-                                    })
-                                }
                             </Box>
 
                             <Box sx={{ flexGrow: 0, position: 'absolute', right: 0 }}>

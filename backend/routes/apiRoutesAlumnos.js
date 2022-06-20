@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer( { storage } );
+const upload = multer( { storage, limits: { fileSize: 5000000 } } );
 router.get( '/misCursosLista', verifyJwt ,apiControllersAlumnos.misCursos );
 router.get( '/listaEjerciciosCursoMoreEjercicios', verifyJwt, apiControllersAlumnos.misEjerciciosMasInfo );
 router.get( '/infoEjercicio', verifyJwt ,apiControllersAlumnos.getInfoEjercicio );

@@ -11,7 +11,9 @@ app.use( express.urlencoded( { extended: false } ) );
 app.use( express.json() );
 
 // Setting cors settings
-app.use( cors() );
+app.use( cors({
+    methods: [ 'GET', 'POST' ]
+}) );
 // Config file of routes
 const apiRoutes = require( './routes/apiRoutes' );
 app.use( '/api', apiRoutes );

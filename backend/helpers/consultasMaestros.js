@@ -232,7 +232,7 @@ const getAllRespuestasDb = ( id_ejercicio ) => {
             Promise.all( arrPromiseBusquedaAlumno )
             .then( res => {
                 let arrPromiseBusquedaUsuario = [];
-                res.map( al => {
+                res.forEach( al => {
                     arrPromiseBusquedaUsuario.push(
                         db.Usuario.findByPk( al.id_usuario, { raw: true, attributes: [ 'nombre', 'apellidoPaterno', 'apellidoMaterno', 'matricula' ] } )
                     );
@@ -241,7 +241,7 @@ const getAllRespuestasDb = ( id_ejercicio ) => {
                 Promise.all( arrPromiseBusquedaUsuario )
                 .then( r => {
                     // Solo mapeamos y listo
-                    x.map( ( resultado, i ) => {
+                    x.forEach( ( resultado, i ) => {
                         resultado[ 'infoUsuario' ] = r[ i ];
                     } )                    
                     resolve( x );

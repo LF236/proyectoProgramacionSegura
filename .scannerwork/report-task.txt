@@ -1,6 +1,6 @@
-projectKey=testingII
+projectKey=PROGRAMACION_SEGURA_TERCERO
 serverUrl=http://localhost:9010
 serverVersion=9.4.0.54424
-dashboardUrl=http://localhost:9010/dashboard?id=testingII
-ceTaskId=AYC45KITRXnj6hNOmwkX
-ceTaskUrl=http://localhost:9010/api/ce/task?id=AYC45KITRXnj6hNOmwkX
+dashboardUrl=http://localhost:9010/dashboard?id=PROGRAMACION_SEGURA_TERCERO
+ceTaskId=AYGBc3QG4qyyrghSmLBY
+ceTaskUrl=http://localhost:9010/api/ce/task?id=AYGBc3QG4qyyrghSmLBY
