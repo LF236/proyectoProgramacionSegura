@@ -12,7 +12,8 @@ app.use( express.json() );
 
 // Setting cors settings
 app.use( cors({
-    methods: [ 'GET', 'POST' ]
+    methods: [ 'GET', 'POST' ],
+    origin: '*'
 }) );
 // Config file of routes
 const apiRoutes = require( './routes/apiRoutes' );

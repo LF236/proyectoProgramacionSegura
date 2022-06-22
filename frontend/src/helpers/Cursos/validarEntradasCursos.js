@@ -23,25 +23,42 @@ const validarTipoArchivosValidos = fileName => {
 export const validarCrearNuevoCurso = ( data ) => {
     let listaErrores = [];
     if( data.length == 0 ) listaErrores.push( 'Error al ingresar datos' );
-    if( data.nombre == undefined || data.nombre.length <= 4 ) listaErrores.push( 'Ingresa un nombre más largo' );
-    if( data.descripcion == undefined || data.descripcion.length <= 10 ) listaErrores.push( 'Ingresa una descripción más grande' );
-    if( data.nrc == undefined || data.nfc < 5 ) listaErrores.push( 'Genera un NRC' );
+    if( data.nombre == undefined || data.nombre.trim().length <= 0 ) listaErrores.push( 'No se permiten espacios en blanco' );
+
+    if( data.nombre == undefined || data.nombre.trim().length <= 4 ) listaErrores.push( 'Ingresa un nombre más largo' );
+
+    if( data.descripcion == undefined || data.descripcion.trim().length <= 0 ) listaErrores.push( 'No se permiten espacios en blanco' );
+    
+    if( data.descripcion == undefined || data.descripcion.trim().length <= 10 ) listaErrores.push( 'Ingresa una descripción más grande' );
+
+    if( data.nrc == undefined || data.trim().nfc < 5 ) listaErrores.push( 'Genera un NRC' );
     return listaErrores;
 }
 
 export const validarUpdateCurso = ( data ) => {
     let listaErrores = [];
     if( data.length == 0 ) listaErrores.push( 'Error al ingresar datos' );
-    if( data.nombre == undefined || data.nombre.length <= 4 ) listaErrores.push( 'Ingresa un nombre más largo' );
-    if( data.descripcion == undefined || data.descripcion.length <= 10 ) listaErrores.push( 'Ingresa una descripción más grande' );
+    if( data.nombre == undefined || data.nombre.trim().length <= 0 ) listaErrores.push( 'No se permiten espacios en blanco o vacios en el nombre' );
+    
+    if( data.nombre == undefined || data.nombre.trim().length <= 4 ) listaErrores.push( 'Ingresa un nombre más largo' );
+
+    if( data.descripcion == undefined || data.descripcion.trim().length <= 0 ) listaErrores.push( 'No se permiten espacios en blanco' );
+    
+    if( data.descripcion == undefined || data.descripcion.trim().length <= 10 ) listaErrores.push( 'Ingresa una descripción más grande' );
+
     return listaErrores;
 }
 
 export const validarCrearEjercicio = ( data, files ) => {
     const listaErrores = [];
     if( Object.keys( data ).length == 0 ) listaErrores.push( 'Error al ingresar datos' );
-    if( data.nombre == undefined || data.nombre.length <= 4 ) listaErrores.push( 'Ingresa un nombre más largo' );
-    if( data.descripcion == undefined || data.descripcion.length <= 4 ) listaErrores.push( 'Ingresa una descripción más larga' );
+    if( data.nombre == undefined || data.nombre.trim().length <= 0 ) listaErrores.push( 'No se permiten espacios en blanco o vacios en el nombre' );
+
+    if( data.nombre == undefined || data.nombre.trim().length <= 4 ) listaErrores.push( 'Ingresa un nombre más largo' );
+    
+    if( data.descripcion == undefined || data.descripcion.trim().length <= 0 ) listaErrores.push( 'No se permiten espacios en blanco o vacios en la descripción' );
+    if( data.descripcion == undefined || data.descripcion.trim().length <= 4 ) listaErrores.push( 'Ingresa una descripción más larga' );
+        
     if( data.entradas_prueba == undefined ) listaErrores.push( 'Ingresa las entradas de prueba' );
     if( !validarEntradasPruebaSalida( data.entradas_prueba ) ) listaErrores.push( 'Formato de entradas de prueba invalido' );
     if( data.salidas_esperadas == undefined ) listaErrores.push( 'Ingresa las entradas de salida' );
@@ -57,7 +74,6 @@ export const validarCrearEjercicio = ( data, files ) => {
     // if( files.script_comprobacion_final == undefined ) listaErrores.push( 'Agrega el Script de comprobación final' );
     // if( files.script_comprobacion_final && !validarTipoArchivosValidos( files.script_comprobacion_final.name ) ) listaErrores.push( 'El Script de comprobación de final debe ser ".sh"' );
 
-    
     return listaErrores;
 }
 
@@ -66,5 +82,4 @@ export const validarEntradasIntento = ( files ) => {
     if( files.script_intento == undefined ) listaErrores.push( 'Agrega tu Script' );
     if( files.script_intento && !validarTipoArchivosValidos( files.script_intento.name ) ) listaErrores.push( 'El script debe ser .sh' );
     return listaErrores;
-
 }

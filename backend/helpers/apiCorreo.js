@@ -11,7 +11,7 @@ const generateVerificationCode = () => {
 }
 
 const transporter = nodeMailer.createTransport({
-    service: 'hotmail',
+    service: 'gmail',
     auth: {
         user: process.env.EMAIL_API,
         pass: process.env.PASS_EMAIL_API
