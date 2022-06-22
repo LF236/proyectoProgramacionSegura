@@ -3,14 +3,19 @@ const validarEntradasPruebaSalida = ( cadena ) => {
         var array = JSON.parse("[" + cadena + "]");
         return true;
     }
-    catch {
+    catch( err ) {
         return false;
     }
 }
 
 const entradas_to_json = ( entrada ) => {
-    var array = JSON.parse("[" + entrada + "]");
-    return array;
+    try {
+        var array = JSON.parse("[" + entrada + "]");
+        return array;
+    }
+    catch( err ) {
+        return false;
+    }
 }
 const validarTipoArchivosValidos = fileName => {
     let extensionesValidas =  /(.sh)$/i;
@@ -23,27 +28,29 @@ const validarTipoArchivosValidos = fileName => {
 export const validarCrearNuevoCurso = ( data ) => {
     let listaErrores = [];
     if( data.length == 0 ) listaErrores.push( 'Error al ingresar datos' );
-    if( data.nombre == undefined || data.nombre.trim().length <= 0 ) listaErrores.push( 'No se permiten espacios en blanco' );
 
-    if( data.nombre == undefined || data.nombre.trim().length <= 4 ) listaErrores.push( 'Ingresa un nombre más largo' );
+    if( data.nombre == undefined || data.nombre.length == 0 ) listaErrores.push( 'El campo del nombre no debe estar vacio' );
+    if( data.nombre == undefined || data.nombre.trim().length <= 0 ) listaErrores.push( 'No se permiten espacios en blanco en el campo nombre' );
+    if( data.nombre == undefined || data.nombre.length <= 4 ) listaErrores.push( 'Ingresa un nombre más largo' );
 
-    if( data.descripcion == undefined || data.descripcion.trim().length <= 0 ) listaErrores.push( 'No se permiten espacios en blanco' );
-    
+    if( data.descripcion == undefined || data.descripcion.length == 0 ) listaErrores.push( 'El campo de descripción no debe estar vacio' );    
+    if( data.descripcion == undefined || data.descripcion.trim().length <= 0 ) listaErrores.push( 'No se permiten espacios en blanco en el campo de descripción' );    
     if( data.descripcion == undefined || data.descripcion.trim().length <= 10 ) listaErrores.push( 'Ingresa una descripción más grande' );
 
-    if( data.nrc == undefined || data.trim().nfc < 5 ) listaErrores.push( 'Genera un NRC' );
+    if( data.nrc == undefined || data.nrc < 5 ) listaErrores.push( 'Genera un NRC' );
     return listaErrores;
 }
 
 export const validarUpdateCurso = ( data ) => {
     let listaErrores = [];
     if( data.length == 0 ) listaErrores.push( 'Error al ingresar datos' );
-    if( data.nombre == undefined || data.nombre.trim().length <= 0 ) listaErrores.push( 'No se permiten espacios en blanco o vacios en el nombre' );
-    
+
+    if( data.nombre == undefined || data.nombre.length == 0 ) listaErrores.push( 'El campo del nombre no debe estar vacio' );
+    if( data.nombre == undefined || data.nombre.trim().length <= 0 ) listaErrores.push( 'No se permiten espacios en blanco en el campo nombre' );
     if( data.nombre == undefined || data.nombre.trim().length <= 4 ) listaErrores.push( 'Ingresa un nombre más largo' );
 
-    if( data.descripcion == undefined || data.descripcion.trim().length <= 0 ) listaErrores.push( 'No se permiten espacios en blanco' );
-    
+    if( data.descripcion == undefined || data.descripcion.length == 0 ) listaErrores.push( 'El campo de descripción no debe estar vacio' );    
+    if( data.descripcion == undefined || data.descripcion.trim().length <= 0 ) listaErrores.push( 'No se permiten espacios en blanco en el campo de descripción' );    
     if( data.descripcion == undefined || data.descripcion.trim().length <= 10 ) listaErrores.push( 'Ingresa una descripción más grande' );
 
     return listaErrores;
@@ -52,16 +59,21 @@ export const validarUpdateCurso = ( data ) => {
 export const validarCrearEjercicio = ( data, files ) => {
     const listaErrores = [];
     if( Object.keys( data ).length == 0 ) listaErrores.push( 'Error al ingresar datos' );
-    if( data.nombre == undefined || data.nombre.trim().length <= 0 ) listaErrores.push( 'No se permiten espacios en blanco o vacios en el nombre' );
 
+    if( data.nombre == undefined || data.nombre.length <= 0 ) listaErrores.push( 'El campo nombre no debe estar vacio' );
+    if( data.nombre == undefined || data.nombre.trim().length <= 0 ) listaErrores.push( 'No se permiten espacios en blanco o vacios en el nombre' );
     if( data.nombre == undefined || data.nombre.trim().length <= 4 ) listaErrores.push( 'Ingresa un nombre más largo' );
     
+    if( data.descripcion == undefined || data.descripcion.length <= 0 ) listaErrores.push( 'El campo de descripción no debe estar vacio' );    
     if( data.descripcion == undefined || data.descripcion.trim().length <= 0 ) listaErrores.push( 'No se permiten espacios en blanco o vacios en la descripción' );
     if( data.descripcion == undefined || data.descripcion.trim().length <= 4 ) listaErrores.push( 'Ingresa una descripción más larga' );
         
-    if( data.entradas_prueba == undefined ) listaErrores.push( 'Ingresa las entradas de prueba' );
+    if( data.entradas_prueba == undefined || data.entradas_prueba.length == 0 ) listaErrores.push( 'Ingresa las entradas de prueba' );
+    if( data.entradas_prueba == undefined || data.entradas_prueba.trim().length <= 0 ) listaErrores.push( 'No se permite iniciar las entradas de prueba con espacios en blanco' );
     if( !validarEntradasPruebaSalida( data.entradas_prueba ) ) listaErrores.push( 'Formato de entradas de prueba invalido' );
-    if( data.salidas_esperadas == undefined ) listaErrores.push( 'Ingresa las entradas de salida' );
+
+    if( data.salidas_esperadas == undefined || data.salidas_esperadas.length == 0 ) listaErrores.push( 'Ingresa las entradas de salida' );
+    if( data.salidas_esperadas == undefined || data.salidas_esperadas.trim().length <= 0 ) listaErrores.push( 'No se permite iniciar con espacios en las entradas de salida' );
     if( !validarEntradasPruebaSalida( data.salidas_esperadas ) ) listaErrores.push( 'Formato de salidas esperadas invalidas' );
     if( ( data.entradas_prueba && data.salidas_esperadas ) &&( entradas_to_json( data.entradas_prueba ).length != entradas_to_json( data.salidas_esperadas ).length ) ) listaErrores.push( 'La cantidad de entradas de pruebas y de salidas debe ser la misma' );
     // Validacion de archivos
